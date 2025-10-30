@@ -244,6 +244,75 @@ a.btn-primary {
     padding: 20px;
 }
 
+/* Bonus Psicologo Modal */
+.bonus-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    padding: 20px;
+}
+
+.bonus-modal-content {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.bonus-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bonus-modal-header i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.bonus-modal-content h3 {
+    margin: 0;
+    font-weight: 400;
+    color: var(--text-primary);
+}
+
+.bonus-modal-content p {
+    color: var(--text-secondary);
+    margin: 0 0 16px 0;
+}
+
+.bonus-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.bonus-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .bonus-modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
 .modal-content {
     background: white;
     border-radius: 12px;

@@ -601,6 +601,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show cookie consent
     showCookieConsent();
+
+    // Show Bonus Psicologo modal on every page load
+    const bonusModal = document.getElementById('bonusModal');
+    const closeBtn = document.getElementById('closeBonusModal');
+    if (bonusModal) {
+        setTimeout(() => {
+            bonusModal.style.display = 'flex';
+        }, 600);
+    }
+    if (closeBtn && bonusModal) {
+        closeBtn.addEventListener('click', () => bonusModal.style.display = 'none');
+        bonusModal.addEventListener('click', (e) => {
+            if (e.target === bonusModal) {
+                bonusModal.style.display = 'none';
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && bonusModal.style.display !== 'none') {
+                bonusModal.style.display = 'none';
+            }
+        });
+    }
     
     // Hamburger menu functionality
     const hamburger = document.querySelector('.hamburger');
