@@ -521,7 +521,19 @@ a.btn-primary {
 .cookie-message p {
     color: var(--text-primary);
     font-size: 1.1rem;
-    margin: 0;
+    margin: 0 0 1rem 0;
+}
+
+.cookie-message button {
+    margin: 0.5rem;
+}
+
+@media (max-width: 480px) {
+    .cookie-message button {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
 }
 
 /* Responsive Design for Booking Section */

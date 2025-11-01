@@ -509,6 +509,42 @@ function saveCookieSettings() {
     loadCookiePreferences();
 }
 
+function enableCalendlyCookies() {
+    // Enable Calendly cookies directly
+    const currentConsent = localStorage.getItem('cookieConsent') || 'custom';
+    localStorage.setItem('cookieConsent', currentConsent === 'essential' ? 'custom' : currentConsent);
+    localStorage.setItem('calendlyCookies', 'true');
+    
+    // Remove the cookie message if it exists
+    const cookieMessage = document.querySelector('.cookie-message');
+    if (cookieMessage) {
+        cookieMessage.remove();
+    }
+    
+    // Load Calendly widget
+    loadCookiePreferences();
+    
+    // Show success notification
+    showNotification('Calendly abilitato! Il calendario è ora disponibile.', 'success');
+    
+    // Reload Calendly widget if needed
+    if (typeof Calendly !== 'undefined') {
+        const widgets = document.querySelectorAll('.calendly-inline-widget');
+        widgets.forEach(widget => {
+            const url = widget.getAttribute('data-url') || widget.closest('[data-url]')?.getAttribute('data-url');
+            if (url && Calendly.initInlineWidget) {
+                Calendly.initInlineWidget({
+                    url: url,
+                    parentElement: widget
+                });
+            }
+        });
+    }
+}
+
+// Make function globally accessible
+window.enableCalendlyCookies = enableCalendlyCookies;
+
 function hideCookieConsent() {
     document.getElementById('cookieConsent').style.display = 'none';
 }
@@ -567,7 +603,15 @@ function hideCalendlyWidgets() {
     if (bookingSection && !bookingSection.querySelector('.cookie-message')) {
         const message = document.createElement('div');
         message.className = 'cookie-message';
-        message.innerHTML = '<p>Per prenotare un appuntamento, accetta i cookie Calendly nelle impostazioni.</p>';
+        message.innerHTML = `
+            <p>Per prenotare un appuntamento, è necessario abilitare i cookie Calendly.</p>
+            <button onclick="enableCalendlyCookies()" class="btn btn-primary">
+                Abilita Calendly
+            </button>
+            <button onclick="showCookieSettings()" class="btn btn-secondary">
+                Impostazioni Cookie
+            </button>
+        `;
         bookingSection.appendChild(message);
     }
 }
