@@ -712,9 +712,11 @@ main:focus {
     padding-top: 0;
 }
 
+/* Bands reach out into the page gutter, so their text stays on the same left edge as the rest */
 .block-tint,
 .block-brand {
-    padding: clamp(1.75rem, 1rem + 3vw, 3.25rem);
+    margin-inline: calc(-1 * var(--gutter));
+    padding: clamp(1.75rem, 1rem + 3vw, 3.25rem) var(--gutter);
     border-top: 0;
     border-radius: var(--r-media);
 }
@@ -1829,6 +1831,12 @@ html:not(.js) .booking-main {
 
     .page-head {
         padding-top: 0;
+    }
+
+    /* Phones: bands run edge to edge */
+    .block-tint,
+    .block-brand {
+        border-radius: 0;
     }
 
     /* One column on phones: icon, label and value on one line */
