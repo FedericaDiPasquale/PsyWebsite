@@ -1,10 +1,10 @@
 /* ==========================================================================
    Dott.ssa Di Pasquale Lorena - design system
-   App shell: fixed header and footer, one screen of content at a time,
-   no page scrolling (with JS). Editorial, few containers: space and
-   hairlines group content.
-   Radius rule: photos, map and Calendly frame 28px, inputs 14px,
-   buttons, nav pills and sub-tab chips fully rounded.
+   App shell: fixed header and footer; only the content area between them
+   scrolls (with JS). Editorial, few containers: space and hairlines group
+   content.
+   Radius rule: photos, map and Calendly frame 28px (the home arch rounds
+   its top fully), inputs 14px, buttons and nav pills fully rounded.
    ========================================================================== */
 
 /* Poppins 300/400/500 (latin), self-hosted from Google Fonts, SIL Open Font License (fonts/OFL.txt) */
@@ -47,6 +47,12 @@
     --tint: #e5eef0;
     --warm: #f7dcc6;
     --warm-ink: #5a3420;
+    --brand-fill: #24566b;
+    --on-brand-fill: #ffffff;
+    --orb-a: #9cc0ca;
+    --orb-b: #f4c9a6;
+    --orb-ring: #24566b;
+    --orb-blend: multiply;
 
     /* Ink */
     --ink: #15262d;
@@ -92,6 +98,12 @@
         --tint: #263a41;
         --warm: rgb(247 196 158 / 0.16);
         --warm-ink: #f7c49e;
+    --brand-fill: #2c5361;
+    --on-brand-fill: #eef4f5;
+    --orb-a: #3f6c79;
+    --orb-b: #8d6047;
+    --orb-ring: #8cc3d6;
+    --orb-blend: screen;
 
         --ink: #e2eaec;
         --ink-2: #bfcccf;
@@ -118,6 +130,12 @@
     --tint: #263a41;
     --warm: rgb(247 196 158 / 0.16);
     --warm-ink: #f7c49e;
+    --brand-fill: #2c5361;
+    --on-brand-fill: #eef4f5;
+    --orb-a: #3f6c79;
+    --orb-b: #8d6047;
+    --orb-ring: #8cc3d6;
+    --orb-blend: screen;
 
     --ink: #e2eaec;
     --ink-2: #bfcccf;
@@ -270,7 +288,7 @@ main:focus {
 }
 
 /* ==========================================================================
-   The shell: fixed header, content area, fixed footer
+   The shell: fixed header, scrolling content area, fixed footer
    ========================================================================== */
 .js body {
     display: grid;
@@ -281,21 +299,20 @@ main:focus {
 }
 
 .js main {
+    position: relative;
     min-height: 0;
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    scroll-padding-top: 1.5rem;
 }
 
 .page {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    padding-top: clamp(1rem, 4vh, 3rem);
-    padding-bottom: clamp(1rem, 3vh, 2.25rem);
-}
-
-/* Without JS the site reads as normal scrolling pages */
-html:not(.js) .page {
-    height: auto;
+    min-height: 100%;
+    padding-top: clamp(1.5rem, 6vh, 4rem);
+    padding-bottom: clamp(2rem, 6vh, 4rem);
 }
 
 /* ==========================================================================
@@ -615,19 +632,13 @@ html:not(.js) .page {
 }
 
 /* ==========================================================================
-   Page head and sub-tabs
+   Page head and sections
    ========================================================================== */
 .page-head {
-    flex: none;
+    padding: clamp(1.75rem, 1rem + 3vw, 3.25rem) 1.25rem;
     text-align: center;
-}
-
-.page-head .lead {
-    margin-inline: auto;
-}
-
-.subtabs {
-    justify-content: center;
+    background: var(--tint);
+    border-radius: var(--r-media);
 }
 
 .page-head h1 {
@@ -635,11 +646,12 @@ html:not(.js) .page {
     font-weight: 300;
     line-height: 1.15;
     letter-spacing: -0.02em;
+    color: var(--primary-color);
 }
 
 .page-head .lead {
     max-width: 62ch;
-    margin-top: 0.6rem;
+    margin: 0.6rem auto 0;
     font-size: var(--step-1);
     line-height: 1.5;
 }
@@ -648,122 +660,70 @@ html:not(.js) .page {
     margin-top: 0.85rem;
 }
 
-.subtabs {
-    display: none;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: clamp(1rem, 3vh, 1.75rem);
-}
-
-.js .subtabs {
-    display: flex;
-}
-
-.subtabs [role="tab"] {
-    padding: 0.45rem 1rem;
-    font: inherit;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    line-height: 1.25;
-    color: var(--ink-2);
-    background: transparent;
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--r-pill);
-    cursor: pointer;
-    transition: color 0.2s var(--ease-out), background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
-}
-
-.subtabs [role="tab"]:hover {
-    color: var(--ink);
-    border-color: var(--ink-3);
-}
-
-.subtabs [role="tab"][aria-selected="true"] {
-    font-weight: 500;
-    color: var(--on-primary);
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.panels {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    margin-top: clamp(1rem, 3.5vh, 2.25rem);
-    padding-top: clamp(1rem, 3vh, 1.75rem);
+.block {
+    margin-top: clamp(2rem, 5vh, 3.5rem);
+    padding-top: clamp(2rem, 5vh, 3.5rem);
     border-top: 1px solid var(--line);
 }
 
-.js .panel {
-    height: 100%;
-    /* Safety valve for very small screens only; normal sizes fit without scrolling */
-    overflow-y: auto;
-    overscroll-behavior: contain;
+.block-title {
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--primary-color);
 }
 
-html:not(.js) .panel + .panel {
-    margin-top: 2.5rem;
+.block + .block-tint,
+.block + .block-brand,
+.block-tint + .block,
+.block-brand + .block {
+    border-top: 0;
 }
 
-.panel-fill {
-    display: flex;
-    flex-direction: column;
+/* Colour bands that set a section apart */
+.page-head + .block:not(.block-tint):not(.block-brand) {
+    border-top: 0;
+    padding-top: 0;
 }
 
-@media (min-width: 861px) {
-    .page {
-        padding-top: clamp(1rem, 7vh - 1rem, 4rem);
-    }
-
-    .subtabs {
-        margin-top: clamp(1rem, 5vh - 0.5rem, 2.75rem);
-    }
-
-    .panels {
-        margin-top: clamp(1rem, 5vh - 0.5rem, 2.75rem);
-        padding-top: clamp(1rem, 5vh - 0.5rem, 2.75rem);
-    }
-}
-
-/* Text beside a photo */
-.panel-media {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(1.5rem, 1rem + 3vw, 5rem);
-    align-items: start;
-}
-
-.panel-figure {
-    height: 100%;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.panel-figure img {
-    flex: 1;
-    min-height: 0;
-    width: auto;
-    max-width: 34vw;
-    object-fit: cover;
+.block-tint,
+.block-brand {
+    padding: clamp(1.75rem, 1rem + 3vw, 3.25rem);
+    border-top: 0;
     border-radius: var(--r-media);
 }
 
-.figure-portrait img {
-    aspect-ratio: 4 / 5;
-    max-height: 420px;
-    object-position: 50% 30%;
+.block-tint {
+    background: var(--tint);
 }
 
-.figure-studio img {
-    aspect-ratio: 4 / 3;
-    max-height: 380px;
+.block-brand {
+    color: color-mix(in srgb, var(--on-brand-fill) 85%, transparent);
+    background: var(--brand-fill);
 }
 
-.panel-figure figcaption {
-    margin-top: 0.6rem;
-    font-size: 0.8438rem;
-    color: var(--ink-3);
+.block-brand .block-title,
+.block-brand .cert-name {
+    color: var(--on-brand-fill);
+}
+
+.block-brand .cert-list li {
+    border-bottom-color: color-mix(in srgb, var(--on-brand-fill) 22%, transparent);
+}
+
+.block-brand .cert-list li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Title on the left, content on the right */
+.split,
+.service {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.6fr);
+    gap: 1rem clamp(1.5rem, 1rem + 3vw, 5rem);
+    align-items: start;
 }
 
 .prose p {
@@ -775,7 +735,7 @@ html:not(.js) .panel + .panel {
 }
 
 .lead-text {
-    font-size: clamp(1.0625rem, min(1.5vw, 2.6vh), 1.3125rem);
+    font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
     font-weight: 300;
     line-height: 1.6;
     color: var(--ink);
@@ -788,39 +748,24 @@ html:not(.js) .panel + .panel {
     justify-content: space-between;
 }
 
-/* Home: the studio photo as a background, washed into the ground on the text side */
-main[data-page="home"] {
-    position: relative;
-    isolation: isolate;
-    background: url("images/studio-1600.jpg") 65% 60% / cover no-repeat;
-}
-
-main[data-page="home"]::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-        linear-gradient(to top, var(--bg) 0%, color-mix(in srgb, var(--bg) 0%, transparent) 22%),
-        linear-gradient(90deg,
-            var(--bg) 0%,
-            color-mix(in srgb, var(--bg) 92%, transparent) 45%,
-            color-mix(in srgb, var(--bg) 68%, transparent) 70%,
-            color-mix(in srgb, var(--bg) 30%, transparent) 100%);
+.home-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(2rem, 1rem + 4vw, 6rem);
 }
 
 .home-hero {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex: 1;
-    min-height: 0;
 }
 
 .home-hero h1 {
-    font-size: clamp(2.125rem, min(5vw, 7.5vh), 4.25rem);
+    font-size: clamp(2.125rem, min(4.2vw, 7vh), 3.75rem);
     font-weight: 300;
-    line-height: 1.1;
+    line-height: 1.12;
     letter-spacing: -0.025em;
     text-wrap: wrap;
 }
@@ -843,24 +788,62 @@ main[data-page="home"]::before {
     margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
 }
 
-.home-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 1.5rem;
-    margin-top: 0.9rem;
+/* Two overlapping circles: two people meeting, drawn in the palette */
+.home-visual {
+    position: relative;
+    justify-self: end;
+    width: min(100%, 440px, 54vh);
+    aspect-ratio: 1;
 }
 
-.home-actions .link-arrow {
-    padding-block: 0.6rem;
-    font-size: 0.9375rem;
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: var(--orb-blend);
+}
+
+.orb-a {
+    top: 6%;
+    left: 0;
+    width: 66%;
+    aspect-ratio: 1;
+    background: var(--orb-a);
+}
+
+.orb-b {
+    right: 0;
+    bottom: 6%;
+    width: 58%;
+    aspect-ratio: 1;
+    background: var(--orb-b);
+}
+
+.orb-ring {
+    position: absolute;
+    top: 22%;
+    left: 20%;
+    width: 60%;
+    aspect-ratio: 1;
+    border: 1.5px solid var(--orb-ring);
+    border-radius: 50%;
+    opacity: 0.55;
+}
+
+@keyframes orb-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .orb-a { animation: orb-breathe 9s ease-in-out infinite; }
+    .orb-b { animation: orb-breathe 9s ease-in-out -4.5s infinite; }
 }
 
 .fact-row {
-    flex: none;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem 1.5rem;
+    margin-top: 2rem;
     padding-top: clamp(1rem, 2.5vh, 1.5rem);
     border-top: 1px solid var(--line);
 }
@@ -881,10 +864,31 @@ main[data-page="home"]::before {
 /* ==========================================================================
    Chi sono
    ========================================================================== */
+.about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(200px, 300px);
+    gap: clamp(2rem, 1rem + 4vw, 6rem);
+    align-items: start;
+}
+
+.portrait {
+    position: sticky;
+    top: 1.5rem;
+    margin: 0;
+}
+
+.portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: var(--r-media);
+}
+
 .timeline li {
     position: relative;
     max-width: 70ch;
-    padding: 0 0 clamp(0.75rem, 2vh, 1.25rem) 1.85rem;
+    padding: 0 0 1.1rem 1.85rem;
 }
 
 .timeline li::before {
@@ -919,10 +923,10 @@ main[data-page="home"]::before {
 
 .cert-list li {
     display: grid;
-    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
     gap: 0.35rem 2rem;
     align-items: baseline;
-    padding-block: clamp(0.85rem, 2.4vh, 1.4rem);
+    padding-block: 1.1rem;
     border-bottom: 1px solid var(--line);
 }
 
@@ -942,31 +946,41 @@ main[data-page="home"]::before {
     max-width: 52ch;
 }
 
+#studio {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.studio-photo {
+    margin: 0;
+}
+
+.studio-photo img {
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+    object-position: 50% 55%;
+    border-radius: var(--r-media);
+}
+
+.studio-photo figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.8438rem;
+    color: var(--ink-3);
+}
+
 /* ==========================================================================
    Trattamenti
    ========================================================================== */
-.service {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-    gap: 1rem clamp(1.5rem, 1rem + 3vw, 5rem);
-}
-
-.service h2 {
-    font-size: clamp(1.375rem, min(2.4vw, 4vh), 2rem);
-    font-weight: 300;
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-}
-
 .service-body p {
     max-width: 60ch;
-    font-size: clamp(1rem, min(1.4vw, 2.4vh), 1.1875rem);
+    font-size: var(--step-1);
     line-height: 1.65;
 }
 
 .feature-list {
     max-width: 60ch;
-    margin-top: clamp(1rem, 2.5vh, 1.5rem);
+    margin-top: 1.25rem;
 }
 
 .feature-list li {
@@ -979,11 +993,18 @@ main[data-page="home"]::before {
 /* ==========================================================================
    Prenota
    ========================================================================== */
-.booking-main {
-    flex: 1;
-    min-height: 0;
+.booking {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.booking-main {
+    display: flex;
+    flex-direction: column;
+    height: clamp(560px, 72vh, 760px);
     overflow: hidden;
     background: var(--surface);
     border: 1px solid var(--line);
@@ -1030,17 +1051,7 @@ main[data-page="home"]::before {
     color: var(--ink);
 }
 
-.booking-layout {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.75rem, 2vh, 1.25rem);
-    margin-top: clamp(1rem, 4vh, 2.5rem);
-}
-
 .booking-facts {
-    flex: none;
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem 2rem;
@@ -1049,54 +1060,20 @@ main[data-page="home"]::before {
     font-variant-numeric: tabular-nums;
 }
 
-.info-list {
-    max-width: 640px;
-}
-
-.info-list > div {
-    display: grid;
-    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
-    gap: 0.25rem 2rem;
-    padding-block: clamp(0.85rem, 2.4vh, 1.25rem);
-    border-bottom: 1px solid var(--line);
-}
-
-.info-list > div:first-child {
-    padding-top: 0;
-}
-
-.info-list dt {
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--ink-3);
-}
-
-.info-list dd {
-    margin: 0;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-}
-
-.bonus-copy h2 {
-    font-size: clamp(1.625rem, min(3vw, 5vh), 2.75rem);
-    font-weight: 300;
-    letter-spacing: -0.03em;
-}
-
-.bonus-copy p {
-    max-width: 56ch;
-    margin-top: 0.85rem;
-    font-size: var(--step-1);
-    line-height: 1.55;
-}
-
 /* ==========================================================================
    Contatti
    ========================================================================== */
-.channel-list {
-    columns: 2;
-    column-gap: clamp(2rem, 1rem + 3vw, 5rem);
-    max-width: 1000px;
+.contact-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 1rem + 3vw, 5rem);
+    align-items: stretch;
+}
+
+.page-end {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 0.875rem;
 }
 
 .channel-list > li {
@@ -1238,16 +1215,37 @@ html:not(.js) .booking-main {
     max-width: 860px;
 }
 
-@media (min-width: 861px) {
-    .contact-form {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        column-gap: 1rem;
-        max-width: none;
-    }
+.form-section .block-title {
+    margin-bottom: clamp(1.25rem, 3vh, 2rem);
+    text-align: center;
+}
 
-    .contact-form > :not(.form-row) {
-        grid-column: 1 / -1;
-    }
+.form-section .contact-form {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 1rem clamp(1rem, 2vw, 2rem);
+    max-width: 980px;
+    margin-inline: auto;
+}
+
+.form-fields {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.form-section .form-message {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section .form-message textarea {
+    flex: 1;
+    height: auto;
+    min-height: 160px;
+}
+
+.contact-form > .form-submit-row,
+.contact-form > .success-message {
+    grid-column: 1 / -1;
 }
 
 .form-row {
@@ -1355,6 +1353,7 @@ html:not(.js) .booking-main {
 }
 
 .checkbox-label {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.65rem;
@@ -1592,13 +1591,13 @@ html:not(.js) .booking-main {
     .content-enter {
         animation: content-in 0.38s var(--ease-out) both;
     }
-
-    .js .panel:not([hidden]) {
-        animation: content-in 0.32s var(--ease-out) both;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .js main {
+        scroll-behavior: auto;
+    }
+
     *,
     *::before,
     *::after {
@@ -1628,13 +1627,12 @@ html:not(.js) .booking-main {
 
     .main-nav,
     .brand-role,
-    .footer-bar,
-    .page-head .lead {
+    .footer-bar {
         display: none;
     }
 
     .page-head h1 {
-        font-size: clamp(1.625rem, min(7.5vw, 5vh), 2.25rem);
+        font-size: clamp(1.625rem, 7.5vw, 2.25rem);
     }
 
     .tabbar {
@@ -1682,50 +1680,37 @@ html:not(.js) .booking-main {
         background: var(--primary-soft);
     }
 
-    .subtabs [role="tab"] {
-        padding: 0.4rem 0.85rem;
-        font-size: 0.875rem;
-    }
-
-    .panel-media,
+    .split,
     .service,
-    .info-list > div,
-    .cert-list li {
+    .about-layout,
+    .contact-layout,
+    .cert-list li,
+    .home-grid {
         grid-template-columns: 1fr;
     }
 
-    .panel-media {
-        gap: 1rem;
-        align-content: start;
+    /* Phones: the home stays text only */
+    .home-visual,
+    .fact-row {
+        display: none;
     }
 
-    .panel-figure {
-        display: block;
-        height: auto;
-        min-height: auto;
+    .portrait {
+        position: static;
         order: -1;
     }
 
-    .panel-figure img {
-        flex: none;
-        min-height: auto;
-        max-width: 100%;
+    .portrait img {
+        width: 140px;
+        border-radius: 20px;
     }
 
-    .figure-portrait img {
-        width: auto;
-        height: clamp(64px, 9vh, 84px);
-        border-radius: 18px;
-        max-height: none;
+    .studio-photo img {
+        aspect-ratio: 4 / 3;
     }
 
-    /* On phones the studio photo already lives behind the home page */
-    .figure-studio {
-        display: none;
-    }
-
-    .figure-studio figcaption {
-        display: none;
+    .booking-main {
+        height: clamp(560px, 75vh, 700px);
     }
 
     .booking-facts {
@@ -1734,19 +1719,32 @@ html:not(.js) .booking-main {
         font-size: 0.875rem;
     }
 
-    .service {
+    .contact-map {
+        min-height: 320px;
+    }
+
+    .form-section .contact-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-fields {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.75rem;
     }
 
-    .channel-value {
-        font-size: 1rem;
+    .form-section .form-message textarea {
+        min-height: 130px;
+    }
+
+    .page-head {
+        padding-block: 1.5rem;
+    }
+
+    .home-visual {
+        display: none;
     }
 
     /* One column on phones: icon, label and value on one line */
-    .channel-list {
-        columns: auto;
-    }
-
     .channel-list > li {
         grid-template-columns: 1.15rem 5.75rem minmax(0, 1fr);
         gap: 0 0.5rem;
@@ -1777,57 +1775,10 @@ html:not(.js) .booking-main {
     .channel-value a[href^="https://wa.me"] {
         white-space: nowrap;
     }
-
-    .home-actions .link-arrow {
-        padding-inline: 0;
-    }
-
-    /* Phones: photo on top, fading into the ground behind the text */
-    main[data-page="home"] {
-        background-image: url("images/studio-900.jpg");
-        background-position: 55% 0;
-        background-size: 100% auto;
-    }
-
-    main[data-page="home"]::before {
-        background: linear-gradient(180deg,
-            color-mix(in srgb, var(--bg) 5%, transparent) 0%,
-            color-mix(in srgb, var(--bg) 60%, transparent) 20%,
-            var(--bg) 34%);
-    }
-
-    .page-home .home-hero {
-        justify-content: flex-end;
-        padding-bottom: 1.5rem;
-    }
 }
 
 @media (max-width: 560px) {
-    body {
-        font-size: 1rem;
-    }
-
     .brand-name {
-        font-size: 1rem;
-    }
-
-    .home-actions {
-        gap: 0.25rem 1.25rem;
-    }
-
-    .home-actions .btn {
-        width: auto;
-    }
-
-    .fact-row {
-        gap: 0.75rem 1rem;
-    }
-
-    .fact-row li {
-        font-size: 0.875rem;
-    }
-
-    .fact-row strong {
         font-size: 1rem;
     }
 
@@ -1843,8 +1794,12 @@ html:not(.js) .booking-main {
         gap: 0.6rem 0.75rem;
     }
 
-    .form-row + .form-row {
-        grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    .form-fields {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .form-fields .form-group:nth-child(n + 3) {
+        grid-column: 1 / -1;
     }
 
     .select-wrap select {
@@ -1862,70 +1817,11 @@ html:not(.js) .booking-main {
         min-height: 44px;
     }
 
-    .btn-submit {
-        flex: none;
-    }
-
     .cookie-consent {
         left: 0.5rem;
         right: 0.5rem;
         bottom: calc(var(--footer-h) + 0.5rem);
         width: auto;
-    }
-}
-
-/* Short screens: tighten vertical rhythm so content still fits */
-@media (max-height: 700px) {
-    .page {
-        padding-top: 0.85rem;
-        padding-bottom: 0.85rem;
-    }
-
-    .subtabs {
-        margin-top: 0.75rem;
-    }
-
-    .panels {
-        margin-top: 0.75rem;
-        padding-top: 0.85rem;
-    }
-
-    .prose p + p {
-        margin-top: 0.7rem;
-    }
-
-    .timeline li {
-        padding-bottom: 0.55rem;
-        font-size: 0.9375rem;
-        line-height: 1.45;
-    }
-
-    .channel-list > li {
-        padding-block: 0.4rem;
-    }
-
-    .prose p {
-        font-size: 0.9375rem;
-    }
-
-    .lead-text {
-        font-size: 1rem;
-    }
-
-    .form-group textarea {
-        height: 72px;
-        min-height: 72px;
-    }
-
-    .channel-extra {
-        margin-top: 0.6rem;
-    }
-}
-
-/* Small phones: keep the bio on one screen without the portrait */
-@media (max-height: 700px) and (max-width: 860px) {
-    .figure-portrait {
-        display: none;
     }
 }
 
@@ -1937,15 +1833,11 @@ html:not(.js) .booking-main {
         overflow: visible;
     }
 
-    .js main,
-    .page,
-    .js .panel {
-        height: auto;
+    .js main {
         overflow: visible;
     }
 
-    .contact-map,
-    .booking-main {
-        min-height: 420px;
+    .page {
+        min-height: 0;
     }
 }

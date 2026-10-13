@@ -25,60 +25,6 @@ function showPrivacyPolicy(event) {
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ========================================
-// Sub-tabs inside a page (Profilo, Formazione, ...)
-// ========================================
-function selectTab(tab, { updateHash = true, focus = false } = {}) {
-    const tablist = tab.closest('[role="tablist"]');
-    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-
-    tabs.forEach(t => {
-        const selected = t === tab;
-        t.setAttribute('aria-selected', String(selected));
-        t.tabIndex = selected ? 0 : -1;
-        const panel = document.getElementById(t.getAttribute('aria-controls'));
-        if (panel) panel.hidden = !selected;
-    });
-
-    if (focus) tab.focus();
-    if (updateHash) {
-        const slug = tab.dataset.slug;
-        const isFirst = tabs[0] === tab;
-        history.replaceState(history.state, '', location.pathname + (isFirst ? '' : '#' + slug));
-    }
-
-    // The map and the calendar only render correctly once visible
-    const panel = document.getElementById(tab.getAttribute('aria-controls'));
-    if (panel && panel.querySelector('.calendly-inline-widget')) initCalendly();
-}
-
-function initTabs(hash) {
-    const tablist = document.querySelector('main [role="tablist"]');
-    if (!tablist) return;
-    const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-    const fromHash = hash ? tabs.find(t => '#' + t.dataset.slug === hash) : null;
-    selectTab(fromHash || tabs[0], { updateHash: false });
-
-    tablist.addEventListener('click', e => {
-        const tab = e.target.closest('[role="tab"]');
-        if (tab) selectTab(tab);
-    });
-
-    tablist.addEventListener('keydown', e => {
-        const i = tabs.indexOf(document.activeElement);
-        if (i < 0) return;
-        let next = null;
-        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-        if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
-        if (e.key === 'Home') next = tabs[0];
-        if (e.key === 'End') next = tabs[tabs.length - 1];
-        if (next) {
-            e.preventDefault();
-            selectTab(next, { focus: true });
-        }
-    });
-}
-
-// ========================================
 // Contact form (Formspree)
 // ========================================
 function initContactForm() {
@@ -332,8 +278,15 @@ function initMapGate() {
     });
 }
 
+// Bring a section into view inside the scrolling content area
+function scrollToHash(hash, smooth = false) {
+    const el = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (!el || !el.closest('main')) return;
+    el.scrollIntoView({ block: 'start', behavior: smooth && !prefersReducedMotion() ? 'smooth' : 'auto' });
+}
+
 function initPage(hash) {
-    initTabs(hash);
+    scrollToHash(hash);
     initMapGate();
     initContactForm();
     initCalendly();
@@ -352,11 +305,11 @@ async function fetchPage(pathname) {
 async function navigate(url, { push = true } = {}) {
     const target = new URL(url, location.href);
 
-    // Same page already on screen: only switch the sub-tab
+    // Same page already on screen: only scroll the content area
     if (target.pathname === renderedPath) {
-        const tab = (target.hash && document.querySelector(`main [role="tab"][data-slug="${target.hash.slice(1)}"]`))
-            || (!push && document.querySelector('main [role="tab"]'));
-        if (tab) selectTab(tab, { updateHash: push });
+        if (push && target.hash) history.pushState({ shell: true }, '', target.pathname + target.hash);
+        if (target.hash) scrollToHash(target.hash, true);
+        else document.querySelector('main').scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
         return;
     }
 

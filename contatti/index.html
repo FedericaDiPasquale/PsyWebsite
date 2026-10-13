@@ -133,102 +133,91 @@
             <div class="page-head">
                 <h1>Contatti</h1>
                 <p class="lead">Come raggiungermi e dove trovarmi.</p>
-                <div class="subtabs" role="tablist" aria-label="Sezioni della pagina">
-                    <button type="button" role="tab" id="tab-recapiti" aria-controls="panel-recapiti" aria-selected="true" tabindex="0" data-slug="recapiti">Recapiti</button>
-                    <button type="button" role="tab" id="tab-mappa" aria-controls="panel-mappa" aria-selected="false" tabindex="-1" data-slug="mappa">Mappa</button>
-                    <button type="button" role="tab" id="tab-messaggio" aria-controls="panel-messaggio" aria-selected="false" tabindex="-1" data-slug="messaggio">Messaggio</button>
-                </div>
             </div>
-            <div class="panels">
-                <section class="panel" role="tabpanel" id="panel-recapiti" aria-labelledby="tab-recapiti" data-slug="recapiti">
-                    <h2 class="sr-only">Recapiti</h2>
-                    <ul class="channel-list">
+            <section class="block contact-layout" id="recapiti" aria-label="Recapiti">
+                <ul class="channel-list">
                         <li><i class="ph ph-map-pin" aria-hidden="true"></i><span class="channel-label">Studio</span><span class="channel-value">Corso Italia 398/b<br>RG 97100, Ragusa, Italia</span></li>
                         <li><i class="ph ph-clock" aria-hidden="true"></i><span class="channel-label">Orari</span><span class="channel-value"><span class="nowrap">Lun-Ven: 9:00-19:00</span><br><span class="nowrap">Sab: 9:00-13:00</span></span></li>
                         <li><i class="ph ph-phone" aria-hidden="true"></i><span class="channel-label">Telefono e Whatsapp</span><span class="channel-value"><a href="tel:+393403531992" onclick="trackPhoneClick()">+39 3403531992</a><br><a href="https://wa.me/393403531992" onclick="trackPhoneClick()" target="_blank" rel="noopener">Scrivi su Whatsapp</a></span></li>
-                        <li><i class="ph ph-identification-card" aria-hidden="true"></i><span class="channel-label">Partita IVA</span><span class="channel-value">01794200889</span></li>
-                        <li class="wide"><i class="ph ph-envelope-simple" aria-hidden="true"></i><span class="channel-label">Email</span><span class="channel-value"><a href="mailto:lorenadipasqualepsicologa@gmail.com" onclick="trackEmailClick()">lorenadipasqualepsicologa@<wbr>gmail.com</a></span></li>
+                        <li><i class="ph ph-envelope-simple" aria-hidden="true"></i><span class="channel-label">Email</span><span class="channel-value"><a href="mailto:lorenadipasqualepsicologa@gmail.com" onclick="trackEmailClick()">lorenadipasqualepsicologa@<wbr>gmail.com</a></span></li>
                         <li><i class="ph ph-seal-check" aria-hidden="true"></i><span class="channel-label">PEC</span><span class="channel-value"><a href="mailto:dipasquale.lorena@psypec.it">dipasquale.lorena@<wbr>psypec.it</a></span></li>
+                        <li><i class="ph ph-identification-card" aria-hidden="true"></i><span class="channel-label">Partita IVA</span><span class="channel-value">01794200889</span></li>
                         <li><i class="ph ph-briefcase" aria-hidden="true"></i><span class="channel-label">Professionale</span><span class="channel-value"><span class="channel-links"><a href="https://www.facebook.com/profile.php?id=100092461432357" target="_blank" rel="noopener noreferrer">Facebook</a> <a href="https://www.linkedin.com/in/lorena-di-pasquale-97963a99/?originalSubdomain=it" target="_blank" rel="noopener noreferrer">LinkedIn</a> <a href="https://www.unobravo.com/psicologi/lorena-di-pasquale" target="_blank" rel="noopener noreferrer">Unobravo</a></span></span></li>
-                    </ul>
-                    <p class="channel-extra">
-                        <button type="button" class="link-button" onclick="showCookieSettings()">Impostazioni Cookie</button>
-                    </p>
-                </section>
-                <section class="panel panel-fill" role="tabpanel" id="panel-mappa" aria-labelledby="tab-mappa" data-slug="mappa">
-                    <h2 class="sr-only">Mappa</h2>
-                    <div class="contact-map">
-                        <div class="map-gate">
-                            <span class="cookie-message-icon" aria-hidden="true"><i class="ph ph-map-trifold" aria-hidden="true"></i></span>
-                            <p>Corso Italia 398/b, RG 97100, Ragusa, Italia</p>
-                            <p class="map-note">La mappa è fornita da Google Maps e si carica solo se la apri.</p>
-                            <button type="button" class="btn btn-primary" data-load-map>Mostra la mappa</button>
-                            <a href="https://www.google.com/maps/search/?api=1&amp;query=Corso+Italia+398%2Fb+97100+Ragusa" target="_blank" rel="noopener" class="link-arrow">Apri in Google Maps <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
-                        </div>
-                        <iframe
-                            data-src="https://www.google.com/maps?q=Corso+Italia+398%2Fb,+97100+Ragusa+RG&amp;output=embed"
-                            width="600"
-                            height="450"
-                            allowfullscreen=""
-                            referrerpolicy="no-referrer-when-downgrade"
-                            title="Mappa dello Studio - Corso Italia 398/b, Ragusa"
-                            hidden>
-                        </iframe>
+                </ul>
+                <div class="contact-map">
+                    <div class="map-gate">
+                        <span class="cookie-message-icon" aria-hidden="true"><i class="ph ph-map-trifold" aria-hidden="true"></i></span>
+                        <p>Corso Italia 398/b, RG 97100, Ragusa, Italia</p>
+                        <p class="map-note">La mappa è fornita da Google Maps e si carica solo se la apri.</p>
+                        <button type="button" class="btn btn-primary" data-load-map>Mostra la mappa</button>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=Corso+Italia+398%2Fb+97100+Ragusa" target="_blank" rel="noopener" class="link-arrow">Apri in Google Maps <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
                     </div>
-                </section>
-                <section class="panel" role="tabpanel" id="panel-messaggio" aria-labelledby="tab-messaggio" data-slug="messaggio">
-                    <h2 class="sr-only">Invia un Messaggio</h2>
-                    <form id="contactForm" class="contact-form" action="https://formspree.io/f/xnngjrkq" method="POST" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactName">Nome *</label>
-                                <input type="text" id="contactName" name="name" autocomplete="name" required aria-describedby="contactName-error">
-                                <p class="field-error" id="contactName-error"></p>
-                            </div>
-                            <div class="form-group">
-                                <label for="contactEmail">Email *</label>
-                                <input type="email" id="contactEmail" name="email" autocomplete="email" required aria-describedby="contactEmail-error">
-                                <p class="field-error" id="contactEmail-error"></p>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="contactPhone">Telefono</label>
-                                <input type="tel" id="contactPhone" name="phone" autocomplete="tel">
-                            </div>
-                            <div class="form-group">
-                                <label for="contactSubject">Oggetto</label>
-                                <div class="select-wrap">
-                                    <select id="contactSubject" name="subject">
-                                        <option value="">Seleziona un argomento</option>
-                                        <option value="consulenza">Richiesta Consulenza</option>
-                                        <option value="informazioni">Informazioni Generali</option>
-                                        <option value="appuntamento">Prenotazione Appuntamento</option>
-                                        <option value="altro">Altro</option>
-                                    </select>
-                                    <i class="ph ph-caret-down" aria-hidden="true"></i>
-                                </div>
-                            </div>
+                    <iframe
+                        data-src="https://www.google.com/maps?q=Corso+Italia+398%2Fb,+97100+Ragusa+RG&amp;output=embed"
+                        width="600"
+                        height="450"
+                        allowfullscreen=""
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Mappa dello Studio - Corso Italia 398/b, Ragusa"
+                        hidden>
+                    </iframe>
+                </div>
+            </section>
+
+            <section class="block block-tint form-section" id="messaggio" aria-labelledby="messaggio-title">
+                <h2 id="messaggio-title" class="block-title">Invia un Messaggio</h2>
+                <form id="contactForm" class="contact-form" action="https://formspree.io/f/xnngjrkq" method="POST" novalidate>
+                    <div class="form-fields">
+                        <div class="form-group">
+                            <label for="contactName">Nome *</label>
+                            <input type="text" id="contactName" name="name" autocomplete="name" required aria-describedby="contactName-error">
+                            <p class="field-error" id="contactName-error"></p>
                         </div>
                         <div class="form-group">
-                            <label for="contactMessage">Messaggio *</label>
-                            <textarea id="contactMessage" name="message" rows="4" placeholder="Descrivi il motivo del tuo contatto..." required aria-describedby="contactMessage-error"></textarea>
-                            <p class="field-error" id="contactMessage-error"></p>
+                            <label for="contactEmail">Email *</label>
+                            <input type="email" id="contactEmail" name="email" autocomplete="email" required aria-describedby="contactEmail-error">
+                            <p class="field-error" id="contactEmail-error"></p>
                         </div>
-                        <div class="form-submit-row">
-                            <div class="form-group">
-                                <label class="checkbox-label" for="contactPrivacy">
-                                    <input type="checkbox" id="contactPrivacy" name="privacy" required aria-describedby="contactPrivacy-error">
-                                    <span class="checkmark" aria-hidden="true"><i class="ph ph-check" aria-hidden="true"></i></span>
-                                    <span>Accetto la <a href="#privacy-policy" onclick="showPrivacyPolicy(event)">Privacy Policy</a> *</span>
-                                </label>
-                                <p class="field-error" id="contactPrivacy-error"></p>
+                        <div class="form-group">
+                            <label for="contactPhone">Telefono</label>
+                            <input type="tel" id="contactPhone" name="phone" autocomplete="tel">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Oggetto</label>
+                            <div class="select-wrap">
+                                <select id="contactSubject" name="subject">
+                                    <option value="">Seleziona un argomento</option>
+                                    <option value="consulenza">Richiesta Consulenza</option>
+                                    <option value="informazioni">Informazioni Generali</option>
+                                    <option value="appuntamento">Prenotazione Appuntamento</option>
+                                    <option value="altro">Altro</option>
+                                </select>
+                                <i class="ph ph-caret-down" aria-hidden="true"></i>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-submit">Invia Messaggio</button>
                         </div>
-                    </form>
-                </section>
-            </div>
+                    </div>
+                    <div class="form-group form-message">
+                        <label for="contactMessage">Messaggio *</label>
+                        <textarea id="contactMessage" name="message" rows="5" placeholder="Descrivi il motivo del tuo contatto..." required aria-describedby="contactMessage-error"></textarea>
+                        <p class="field-error" id="contactMessage-error"></p>
+                    </div>
+                    <div class="form-submit-row">
+                        <div class="form-group">
+                            <label class="checkbox-label" for="contactPrivacy">
+                                <input type="checkbox" id="contactPrivacy" name="privacy" required aria-describedby="contactPrivacy-error">
+                                <span class="checkmark" aria-hidden="true"><i class="ph ph-check" aria-hidden="true"></i></span>
+                                <span>Accetto la <a href="#privacy-policy" onclick="showPrivacyPolicy(event)">Privacy Policy</a> *</span>
+                            </label>
+                            <p class="field-error" id="contactPrivacy-error"></p>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">Invia Messaggio</button>
+                    </div>
+                </form>
+            </section>
+
+            <p class="page-end">
+                <button type="button" class="link-button" onclick="showCookieSettings()">Impostazioni Cookie</button>
+            </p>
         </div>
     </main>
 
