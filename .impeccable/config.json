@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "helvetica neue",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-13T08:58:56.237Z",
+        "reason": "assistant decided: throwaway direction-round sketch in .impeccable/mocks/decision (gitignored, not shipped); Helvetica Neue only renders the rejected candidate worlds"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "helvetica neue",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-13T08:58:56.619Z",
+        "reason": "assistant decided: throwaway direction-round sketch in .impeccable/mocks/decision (gitignored, not shipped); Helvetica Neue only renders the rejected candidate worlds"
+      }
+    ]
+  }
+}

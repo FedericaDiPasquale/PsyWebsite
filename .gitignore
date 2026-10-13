@@ -69,3 +69,8 @@ logs
 # Temporary files
 tmp/
 temp/
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+# Impeccable working captures and decision mocks (regenerable)
+.impeccable/review/
+.impeccable/mocks/

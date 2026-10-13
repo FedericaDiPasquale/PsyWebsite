@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;}catch(e){}</script>
+    <title>Pagina non trovata | Dott.ssa Di Pasquale Lorena</title>
+    <meta name="description" content="La pagina che cerchi non esiste o è stata spostata.">
+    <meta name="author" content="Dott.ssa Di Pasquale Lorena">
+    <meta name="robots" content="noindex, follow">
+
+    <meta name="theme-color" content="#24566b">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Fonts, styles, icons -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400.woff2" crossorigin>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QB7378CYP0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        
+        // Set default consent state (denied until user accepts)
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'functionality_storage': 'denied',
+            'personalization_storage': 'denied',
+            'security_storage': 'granted'
+        });
+        
+        gtag('js', new Date());
+        gtag('config', 'G-QB7378CYP0', {
+            // Enhanced measurement for better insights
+            send_page_view: true,
+            // Custom parameters for psychology practice
+            custom_map: {
+                'custom_parameter_1': 'service_type',
+                'custom_parameter_2': 'appointment_booking'
+            }
+        });
+        
+        // Track form submissions
+        function trackFormSubmission(formType) {
+            gtag('event', 'form_submit', {
+                'event_category': 'engagement',
+                'event_label': formType,
+                'value': 1
+            });
+        }
+        
+        // Track phone clicks
+        function trackPhoneClick() {
+            gtag('event', 'phone_call', {
+                'event_category': 'contact',
+                'event_label': 'phone_click',
+                'value': 1
+            });
+        }
+        
+        // Track email clicks
+        function trackEmailClick() {
+            gtag('event', 'email_click', {
+                'event_category': 'contact',
+                'event_label': 'email_click',
+                'value': 1
+            });
+        }
+    </script>
+
+</head>
+<body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="brand">
+                <span class="brand-name">Dott.ssa Di Pasquale Lorena</span>
+                <span class="brand-role">Psicologa e Psicoterapeuta</span>
+            </a>
+            <nav class="main-nav" aria-label="Navigazione principale">
+                <ul>
+                    <li><a href="/chi-sono/" class="nav-pill">Chi sono</a></li>
+                    <li><a href="/trattamenti/" class="nav-pill">Trattamenti</a></li>
+                    <li><a href="/contatti/" class="nav-pill">Contatti</a></li>
+                    <li><a href="/prenota/" class="nav-pill nav-book">Prenota</a></li>
+                </ul>
+            </nav>
+            <button type="button" class="theme-toggle" aria-label="Passa al tema scuro"><i class="ph ph-moon" aria-hidden="true"></i></button>
+        </div>
+    </header>
+
+    <main id="main" tabindex="-1" data-page="404">
+        <div class="page page-home container">
+            <section class="home-hero">
+                <h1>Pagina non trovata</h1>
+                <p class="home-tagline">La pagina che cerchi non esiste o è stata spostata.</p>
+                <div class="home-actions">
+                    <a href="/" class="btn btn-primary">Torna alla home</a>
+                    <a href="/prenota/" class="link-arrow">Prenota un appuntamento <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-bar">
+            <p class="footer-legal">
+                <span>&copy; <span class="current-year">2025</span> Dott.ssa Di Pasquale Lorena</span>
+                <span>P.IVA 01794200889</span>
+                <span>Albo Psicologi Regione Sicilia n. 10319-A</span>
+            </p>
+            <ul class="footer-links">
+                <li><a href="tel:+393403531992" onclick="trackPhoneClick()">+39 3403531992</a></li>
+                <li><a href="https://wa.me/393403531992" onclick="trackPhoneClick()" target="_blank" rel="noopener">Whatsapp</a></li>
+                <li><button type="button" class="footer-link-btn" onclick="showCookieSettings()">Impostazioni Cookie</button></li>
+            </ul>
+        </div>
+        <nav class="tabbar" aria-label="Menu">
+            <ul>
+                <li><a href="/"><i class="ph ph-house" aria-hidden="true"></i><span>Home</span></a></li>
+                <li><a href="/chi-sono/"><i class="ph ph-user" aria-hidden="true"></i><span>Chi sono</span></a></li>
+                <li><a href="/trattamenti/"><i class="ph ph-hand-heart" aria-hidden="true"></i><span>Trattamenti</span></a></li>
+                <li><a href="/prenota/"><i class="ph ph-calendar-check" aria-hidden="true"></i><span>Prenota</span></a></li>
+                <li><a href="/contatti/"><i class="ph ph-chat-circle" aria-hidden="true"></i><span>Contatti</span></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="cookie-consent" role="region" aria-label="Consenso cookie" hidden>
+        <div class="cookie-text">
+            <h2>Utilizzo dei Cookie</h2>
+            <p>Questo sito utilizza cookie per migliorare la tua esperienza di navigazione e per analizzare il traffico del sito.
+            Continuando a navigare, accetti l'utilizzo dei cookie.
+            <a href="#privacy-policy" onclick="showPrivacyPolicy(event)">Leggi la Privacy Policy</a></p>
+        </div>
+        <div class="cookie-buttons">
+            <button type="button" onclick="acceptAllCookies()" class="btn btn-primary btn-sm">Accetta Tutti</button>
+            <button type="button" onclick="acceptEssentialCookies()" class="btn btn-ghost btn-sm">Solo Essenziali</button>
+            <button type="button" onclick="showCookieSettings()" class="btn-text">Impostazioni</button>
+        </div>
+    </div>
+
+    <!-- Cookie Settings Modal -->
+    <div id="cookieSettings" class="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title" hidden>
+        <div class="modal-content">
+            <h2 id="cookie-settings-title">Impostazioni Cookie</h2>
+            <div class="cookie-option">
+                <label>
+                    <input type="checkbox" id="essentialCookies" checked disabled>
+                    <span><strong>Cookie Essenziali</strong> (Sempre attivi)
+                    <small>Necessari per il funzionamento del sito</small></span>
+                </label>
+            </div>
+            <div class="cookie-option">
+                <label>
+                    <input type="checkbox" id="analyticsCookies">
+                    <span><strong>Cookie Analitici</strong>
+                    <small>Google Analytics per analizzare l'utilizzo del sito</small></span>
+                </label>
+            </div>
+            <div class="cookie-option">
+                <label>
+                    <input type="checkbox" id="calendlyCookies">
+                    <span><strong>Cookie Calendly</strong>
+                    <small>Calendly per la prenotazione di appuntamenti e invio messaggi</small></span>
+                </label>
+            </div>
+            <div class="cookie-buttons">
+                <button type="button" onclick="saveCookieSettings()" class="btn btn-primary">Salva Preferenze</button>
+                <button type="button" onclick="closeCookieSettings()" class="btn btn-ghost">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>

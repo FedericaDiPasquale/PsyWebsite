@@ -4,8 +4,8 @@
     "description": "Psicologa e Psicoterapeuta specializzata a Ragusa. Terapia online e presenziale per adulti e adolescenti.",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#4080a3",
+    "background_color": "#f4f7f8",
+    "theme_color": "#24566b",
     "orientation": "portrait-primary",
     "icons": [
         {
