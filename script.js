@@ -134,7 +134,7 @@ function loadCalendlyScript() {
 }
 
 function initCalendly() {
-    const widget = document.querySelector('.calendly-inline-widget');
+    const widget = document.querySelector('.calendly-embed');
     if (!widget) return;
     const bookingMain = widget.closest('.booking-main');
     const message = bookingMain && bookingMain.querySelector('.cookie-message');
@@ -343,7 +343,11 @@ async function navigate(url, { push = true } = {}) {
     };
 
     if (document.startViewTransition && !prefersReducedMotion()) {
-        await document.startViewTransition(swap).updateCallbackDone;
+        // An interrupted transition still swaps the content; just silence its promises
+        const transition = document.startViewTransition(swap);
+        transition.ready.catch(() => {});
+        transition.finished.catch(() => {});
+        await transition.updateCallbackDone.catch(() => {});
     } else {
         swap();
         if (!prefersReducedMotion()) document.querySelector('main').classList.add('content-enter');
