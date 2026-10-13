@@ -751,9 +751,8 @@ main:focus {
 .home-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     align-items: center;
-    gap: clamp(2rem, 1rem + 4vw, 6rem);
+    max-width: 56%;
 }
 
 .home-hero {
@@ -788,12 +787,38 @@ main:focus {
     margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
 }
 
-/* Two overlapping circles: two people meeting, drawn in the palette */
-.home-visual {
-    position: relative;
-    justify-self: end;
-    width: min(100%, 440px, 54vh);
+/* Ambient background on every page: two overlapping circles (two people meeting).
+   It lives outside <main>, so it stays put and glides when the page changes. */
+.ambient {
+    position: fixed;
+    top: var(--header-h);
+    bottom: var(--footer-h);
+    left: 0;
+    right: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.js main {
+    z-index: 1;
+}
+
+.ambient-inner {
+    position: absolute;
+    top: 50%;
+    right: max(var(--gutter), calc((100vw - 1240px) / 2 + var(--gutter)));
+    width: min(42vw, 520px, 66vh);
     aspect-ratio: 1;
+    opacity: 1;
+    transform: translateY(-50%);
+    transition: opacity 0.9s var(--ease-out), transform 1.2s var(--ease-out);
+}
+
+/* Inner pages: softer and tucked into the corner so reading stays easy */
+body:has(main:not([data-page="home"])) .ambient-inner {
+    opacity: 0.32;
+    transform: translate(28%, 6%) scale(1.25);
 }
 
 .orb {
@@ -829,14 +854,26 @@ main:focus {
     opacity: 0.55;
 }
 
-@keyframes orb-breathe {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.04); }
+@keyframes orb-drift-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(4%, -3%) scale(1.04); }
+    66% { transform: translate(-3%, 3%) scale(0.98); }
+}
+
+@keyframes orb-drift-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40% { transform: translate(-5%, 2%) scale(1.05); }
+    75% { transform: translate(3%, -4%) scale(0.97); }
+}
+
+@keyframes orb-turn {
+    to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .orb-a { animation: orb-breathe 9s ease-in-out infinite; }
-    .orb-b { animation: orb-breathe 9s ease-in-out -4.5s infinite; }
+    .orb-a { animation: orb-drift-a 22s ease-in-out infinite; }
+    .orb-b { animation: orb-drift-b 26s ease-in-out infinite; }
+    .orb-ring { animation: orb-turn 60s linear infinite; border-style: solid dashed solid solid; }
 }
 
 .fact-row {
@@ -1689,10 +1726,27 @@ html:not(.js) .booking-main {
         grid-template-columns: 1fr;
     }
 
-    /* Phones: the home stays text only */
-    .home-visual,
+    /* Phones: no fact row; the circles sit above the title */
     .fact-row {
         display: none;
+    }
+
+    .home-grid {
+        max-width: none;
+        align-items: end;
+        padding-bottom: 8vh;
+    }
+
+    .ambient-inner {
+        top: 2%;
+        right: -14vw;
+        width: min(78vw, 46vh);
+        transform: none;
+    }
+
+    body:has(main:not([data-page="home"])) .ambient-inner {
+        opacity: 0.22;
+        transform: translate(10%, 75%) scale(1.15);
     }
 
     .portrait {
@@ -1738,10 +1792,6 @@ html:not(.js) .booking-main {
 
     .page-head {
         padding-block: 1.5rem;
-    }
-
-    .home-visual {
-        display: none;
     }
 
     /* One column on phones: icon, label and value on one line */
