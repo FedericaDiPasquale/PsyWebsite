@@ -50,33 +50,33 @@
 }
 
 :root {
-    color-scheme: light;
+    color-scheme: dark;
 
     /* Brand: deep petrol taken from the studio armchairs */
-    --primary-color: #24566b;
-    --primary-strong: #1a4254;
-    --primary-soft: #d6e6ea;
-    --on-primary: #ffffff;
+    --primary-color: #8cc3d6;
+    --primary-strong: #a9d4e2;
+    --primary-soft: #2e4c57;
+    --on-primary: #0d1b21;
 
     /* Grounds */
-    --bg: #f4f7f8;
-    --surface: #ffffff;
-    --tint: #e5eef0;
-    --warm: #f7dcc6;
-    --warm-ink: #5a3420;
-    --brand-fill: #24566b;
-    --on-brand-fill: #ffffff;
+    --bg: #1f2c32;
+    --surface: #26363d;
+    --tint: #263a41;
+    --warm: rgb(247 196 158 / 0.16);
+    --warm-ink: #f7c49e;
+    --brand-fill: #2c5361;
+    --on-brand-fill: #eef4f5;
 
     /* Ink */
-    --ink: #15262d;
-    --ink-2: #3d4f56;
-    --ink-3: #5a6b72;
-    --line: #d5dfe1;
-    --line-strong: #b7c6c9;
+    --ink: #e2eaec;
+    --ink-2: #bfcccf;
+    --ink-3: #9aaeb3;
+    --line: #364b53;
+    --line-strong: #4b646d;
 
     /* Status */
-    --success: #1f7a52;
-    --error: #b42318;
+    --success: #6fcf9f;
+    --error: #ff8a7a;
 
     /* Type */
     --font: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -95,7 +95,7 @@
     --footer-h: 52px;
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --shadow-float: 0 1px 2px rgb(21 38 45 / 0.08), 0 16px 40px -14px rgb(21 38 45 / 0.28);
+    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -14px rgb(0 0 0 / 0.6);
 }
 
 /* ==========================================================================
@@ -747,8 +747,9 @@ main:focus {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(90deg, var(--bg) 0%, rgb(244 247 248 / 0.85) 22%, rgb(244 247 248 / 0.2) 48%, rgb(244 247 248 / 0) 70%),
-        linear-gradient(0deg, rgb(244 247 248 / 0.9) 0%, rgb(244 247 248 / 0) 28%);
+        linear-gradient(90deg, var(--bg) 0%, rgb(31 44 50 / 0.85) 22%, rgb(31 44 50 / 0.2) 48%, rgb(31 44 50 / 0) 70%),
+        linear-gradient(0deg, rgb(31 44 50 / 0.9) 0%, rgb(31 44 50 / 0) 28%),
+        rgb(31 44 50 / 0.3);
 }
 
 body:has(main[data-page="home"]) .ambient-photo {
@@ -1860,7 +1861,9 @@ html:not(.js) .booking-main {
     }
 
     .ambient-photo::after {
-        background: linear-gradient(180deg, rgb(244 247 248 / 0) 50%, rgb(244 247 248 / 0.75) 80%, var(--bg) 100%);
+        background:
+            linear-gradient(180deg, rgb(31 44 50 / 0) 50%, rgb(31 44 50 / 0.75) 80%, var(--bg) 100%),
+            rgb(31 44 50 / 0.3);
     }
 
     .portrait {
