@@ -776,6 +776,7 @@ main:focus {
     counter-increment: step;
 }
 
+/* Terracotta: the warm accent, used sparingly (step numbers, small labels) */
 .steps li::before {
     content: counter(step);
     display: grid;
@@ -785,9 +786,18 @@ main:focus {
     margin-bottom: 1rem;
     font-family: var(--font-display);
     font-size: 1.25rem;
-    color: var(--primary-color);
-    border: 1px solid var(--line-strong);
+    color: var(--warm-ink);
+    background: var(--warm);
     border-radius: 50%;
+}
+
+.eyebrow {
+    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--warm-ink);
 }
 
 /* The questionnaire invitation, right under the name in the hero */
