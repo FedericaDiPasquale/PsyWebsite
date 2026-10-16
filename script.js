@@ -255,7 +255,7 @@ function loadCookiePreferences() {
 // In-place navigation: header and footer stay, only <main> changes.
 // Every URL is still a complete page, so links work without JS and for search engines.
 // ========================================
-const SHELL_PAGES = ['/', '/chi-sono/', '/trattamenti/', '/prenota/', '/contatti/'];
+const SHELL_PAGES = ['/', '/chi-sono/', '/trattamenti/', '/prenota/', '/contatti/', '/primo-passo/'];
 const pageCache = new Map();
 let renderedPath = location.pathname;
 
@@ -290,6 +290,7 @@ function initPage(hash) {
     initMapGate();
     initContactForm();
     initCalendly();
+    initPrimoPasso();
     document.querySelectorAll('.current-year').forEach(el => { el.textContent = new Date().getFullYear(); });
 }
 
@@ -378,6 +379,114 @@ function initShellNavigation() {
     const prefetch = () => SHELL_PAGES.filter(p => p !== location.pathname).forEach(p => fetchPage(p).catch(() => {}));
     if ('requestIdleCallback' in window) requestIdleCallback(prefetch);
     else setTimeout(prefetch, 1500);
+}
+
+// ========================================
+// Il primo passo: one question at a time, answers never leave the page
+// until the visitor opens WhatsApp themselves
+// ========================================
+const WHATSAPP_NUMBER = '393403531992';
+
+function initPrimoPasso() {
+    const form = document.getElementById('primoPasso');
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = 'true';
+
+    const q = name => form.querySelector('[data-pp="' + name + '"]');
+    const intro = form.querySelector('[data-step="intro"]');
+    const summary = form.querySelector('[data-step="summary"]');
+    const steps = Array.from(form.querySelectorAll('.pp-step'));
+    const controls = q('controls');
+    const nextBtn = q('next');
+    let current = -1; // -1 intro, steps.length summary
+
+    function answerOf(step) {
+        const fields = Array.from(step.querySelectorAll('input, textarea'));
+        if (fields.some(f => f.type === 'radio' || f.type === 'checkbox')) {
+            return fields.filter(f => f.checked).map(f => f.value).join(', ');
+        }
+        return fields.map(f => f.value.trim()).filter(Boolean).join(' ');
+    }
+
+    function buildMessage() {
+        const lines = ['Buongiorno Dott.ssa Di Pasquale, le scrivo dal sito dopo aver risposto al "primo passo".', ''];
+        steps.forEach(step => {
+            const answer = answerOf(step);
+            if (answer) lines.push(step.querySelector('legend').textContent.trim(), answer, '');
+        });
+        return lines.join('\n').trim();
+    }
+
+    function renderSummary() {
+        const list = q('answers');
+        list.replaceChildren();
+        steps.forEach((step, i) => {
+            const dt = document.createElement('dt');
+            dt.textContent = step.querySelector('legend').textContent.trim();
+            const dd = document.createElement('dd');
+            const text = document.createElement('span');
+            const answer = answerOf(step);
+            text.textContent = answer || 'Nessuna risposta';
+            if (!answer) text.className = 'pp-empty';
+            const edit = document.createElement('button');
+            edit.type = 'button';
+            edit.className = 'btn-text pp-edit';
+            edit.textContent = 'Modifica';
+            edit.setAttribute('aria-label', 'Modifica: ' + step.dataset.label);
+            edit.addEventListener('click', () => show(i));
+            dd.append(text, edit);
+            list.append(dt, dd);
+        });
+        const name = form.querySelector('[name="nome"]').value.trim();
+        q('name').textContent = name ? ', ' + name : '';
+        q('whatsapp').href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(buildMessage());
+    }
+
+    function show(index) {
+        current = index;
+        intro.hidden = index !== -1;
+        summary.hidden = index !== steps.length;
+        steps.forEach((step, i) => { step.hidden = i !== index; });
+        controls.hidden = index < 0 || index >= steps.length;
+        form.closest('.page').classList.toggle('pp-started', index >= 0);
+
+        if (index >= 0 && index < steps.length) {
+            q('count').textContent = 'Domanda ' + (index + 1) + ' di ' + steps.length;
+            q('bar').style.width = ((index + 1) / steps.length * 100) + '%';
+            nextBtn.innerHTML = (index === steps.length - 1 ? 'Rivedi le risposte' : 'Avanti') + ' <i class="ph ph-arrow-right" aria-hidden="true"></i>';
+            const step = steps[index];
+            const field = step.querySelector('input:checked, input[type="text"], textarea') || step.querySelector('input');
+            if (field) field.focus({ preventScroll: true });
+        } else if (index === steps.length) {
+            renderSummary();
+            form.querySelector('.pp-summary-title').focus({ preventScroll: true });
+        }
+        const main = document.querySelector('main');
+        if (main) main.scrollTo({ top: 0 });
+    }
+
+    q('start').addEventListener('click', () => show(0));
+    nextBtn.addEventListener('click', () => show(current + 1));
+    q('back').addEventListener('click', () => show(current - 1));
+    q('reset').addEventListener('click', () => {
+        form.reset();
+        show(-1);
+    });
+    q('whatsapp').addEventListener('click', () => {
+        if (typeof gtag !== 'undefined') gtag('event', 'primo_passo_whatsapp', { event_category: 'contact' });
+    });
+
+    // Enter in a one-line field moves on instead of submitting the form
+    form.addEventListener('submit', e => e.preventDefault());
+    form.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && e.target.matches('input[type="text"]')) {
+            e.preventDefault();
+            show(current + 1);
+        }
+    });
+
+    form.classList.add('pp-ready');
+    show(-1);
 }
 
 // ========================================

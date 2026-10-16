@@ -1683,6 +1683,241 @@ html:not(.js) .booking-main {
 }
 
 /* ==========================================================================
+   Il primo passo: one question per screen, answers sent only via WhatsApp
+   ========================================================================== */
+.pp {
+    width: 100%;
+    max-width: 40rem;
+    margin: clamp(1.5rem, 4vh, 2.75rem) auto 0;
+}
+
+.pp [hidden] {
+    display: none;
+}
+
+.pp-step {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.pp-step + .pp-step {
+    margin-top: 2.5rem;
+}
+
+.pp-ready .pp-step + .pp-step {
+    margin-top: 0;
+}
+
+.pp-step legend,
+.pp-summary-title {
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.125rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+}
+
+.pp-summary-title:focus {
+    outline: none;
+}
+
+.pp-hint {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
+}
+
+.pp-step .form-group,
+.pp-options {
+    margin-top: 1.25rem;
+}
+
+.pp-step textarea {
+    height: clamp(120px, 22vh, 200px);
+}
+
+.pp-options {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.pp-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 50px;
+    padding: 0.65rem 1.1rem;
+    font-size: 1rem;
+    line-height: 1.35;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--r-input);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+
+.pp-option:hover {
+    border-color: var(--ink-3);
+}
+
+.pp-option input {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+    accent-color: var(--primary-color);
+}
+
+.pp-option:has(input:checked) {
+    background: var(--primary-soft);
+    border-color: var(--primary-color);
+}
+
+.pp-option:has(input:focus-visible) {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary-color) 18%, transparent);
+}
+
+.pp-promise {
+    display: grid;
+    gap: 0.9rem;
+    padding: 0;
+    list-style: none;
+    font-size: var(--step-1);
+    line-height: 1.5;
+}
+
+.pp-promise li {
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.pp-urgent,
+.pp-privacy {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+}
+
+.pp-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-top: 1.75rem;
+}
+
+.pp-controls {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    margin-top: 1.5rem;
+    padding: 1rem 0 clamp(0.75rem, 2vh, 1.25rem);
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+}
+
+/* Once started, the questions get the room the subtitle was using */
+.pp-started .page-head .lead {
+    display: none;
+}
+
+.pp-controls .pp-nav {
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.pp-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--ink-3);
+}
+
+.pp-bar {
+    flex: 1;
+    height: 4px;
+    overflow: hidden;
+    background: var(--line);
+    border-radius: var(--r-pill);
+}
+
+.pp-bar span {
+    display: block;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: inherit;
+    transition: width 0.4s var(--ease-out);
+}
+
+.pp-answers {
+    margin-top: 1.5rem;
+}
+
+.pp-answers dt {
+    padding-top: 0.9rem;
+    font-size: 0.875rem;
+    color: var(--ink-3);
+    border-top: 1px solid var(--line);
+}
+
+.pp-answers dd {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.2rem 0 0.9rem;
+    color: var(--ink);
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.pp-empty {
+    color: var(--ink-3);
+}
+
+.pp-edit {
+    flex: none;
+    font-size: 0.875rem;
+}
+
+/* Without JavaScript the questions stay readable but cannot be sent */
+.pp:not(.pp-ready) .pp-intro .pp-nav,
+.pp:not(.pp-ready) .pp-summary,
+.pp:not(.pp-ready) .pp-controls {
+    display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .pp-ready .pp-step:not([hidden]),
+    .pp-ready .pp-summary:not([hidden]),
+    .pp-ready .pp-intro:not([hidden]) {
+        animation: pp-in 0.45s var(--ease-out);
+    }
+}
+
+@keyframes pp-in {
+    from { opacity: 0; transform: translateY(8px); }
+}
+
+.home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
+}
+
+.home-actions .home-offer {
+    margin-top: 0;
+}
+
+/* ==========================================================================
    Responsive
    ========================================================================== */
 @media (max-width: 1100px) {
