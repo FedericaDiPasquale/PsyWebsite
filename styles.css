@@ -715,20 +715,6 @@ main:focus {
     margin-top: clamp(1.75rem, 4vh, 2.5rem);
 }
 
-.hero-note {
-    max-width: 44ch;
-    margin-top: 0.75rem;
-    font-size: 0.9375rem;
-    color: var(--ink-3);
-}
-
-.hero-alt {
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--line);
-    max-width: 44ch;
-}
-
 .btn-lg {
     min-height: 52px;
     padding: 0.8rem 1.75rem;
@@ -804,9 +790,10 @@ main:focus {
     border-radius: 50%;
 }
 
+/* The questionnaire invitation, right under the name in the hero */
 .home-cta {
-    margin-top: clamp(4rem, 10vh, 7rem);
-    padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
+    margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
     text-align: center;
     background: var(--tint);
     border-radius: var(--r-media);
@@ -814,14 +801,24 @@ main:focus {
 
 .home-cta h2 {
     font-family: var(--font-display);
-    font-size: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem);
+    font-size: clamp(1.625rem, 1.3rem + 1.1vw, 2.125rem);
     font-weight: 400;
-    line-height: 1.15;
+    line-height: 1.2;
     color: var(--ink);
+    text-wrap: balance;
+}
+
+.home-cta-note {
+    max-width: 40ch;
+    margin: 0.6rem auto 0;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
 }
 
 .home-cta .hero-actions {
-    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 /* ==========================================================================
@@ -1928,11 +1925,6 @@ html:not(.js) .booking-main {
     .steps {
         grid-template-columns: 1fr;
         gap: 1.75rem;
-    }
-
-    .home-cta {
-        margin-inline: calc(-1 * var(--gutter));
-        border-radius: 0;
     }
 
     .split,
