@@ -776,6 +776,15 @@ main:focus {
     counter-increment: step;
 }
 
+.home-local-text {
+    max-width: 68ch;
+    margin-top: 1.25rem;
+}
+
+.home-local-text p + p {
+    margin-top: 1rem;
+}
+
 /* Terracotta: the warm accent, used sparingly (step numbers, small labels) */
 .steps li::before {
     content: counter(step);
