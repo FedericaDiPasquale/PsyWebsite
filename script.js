@@ -490,40 +490,9 @@ function initPrimoPasso() {
 }
 
 // ========================================
-// Light / dark theme toggle (follows the device until the visitor chooses)
-// ========================================
-const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-function currentTheme() {
-    return document.documentElement.dataset.theme || (systemDark.matches ? 'dark' : 'light');
-}
-
-function updateThemeToggle() {
-    const btn = document.querySelector('.theme-toggle');
-    if (!btn) return;
-    const dark = currentTheme() === 'dark';
-    btn.setAttribute('aria-label', dark ? 'Passa al tema chiaro' : 'Passa al tema scuro');
-    btn.querySelector('i').className = 'ph ' + (dark ? 'ph-sun' : 'ph-moon');
-}
-
-function initThemeToggle() {
-    const btn = document.querySelector('.theme-toggle');
-    if (!btn) return;
-    updateThemeToggle();
-    btn.addEventListener('click', () => {
-        const next = currentTheme() === 'dark' ? 'light' : 'dark';
-        document.documentElement.dataset.theme = next;
-        try { localStorage.setItem('theme', next); } catch (e) { /* storage unavailable: theme lasts for this visit */ }
-        updateThemeToggle();
-    });
-    systemDark.addEventListener('change', updateThemeToggle);
-}
-
-// ========================================
 // Init
 // ========================================
 document.addEventListener('DOMContentLoaded', function () {
-    initThemeToggle();
     initPage(location.hash);
     showCookieConsent();
     initShellNavigation();

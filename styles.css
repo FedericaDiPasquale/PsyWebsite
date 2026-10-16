@@ -66,12 +66,6 @@
     --warm-ink: #5a3420;
     --brand-fill: #24566b;
     --on-brand-fill: #ffffff;
-    --orb-a: #a3c4ce;
-    --orb-a-hi: #d6e8ec;
-    --orb-b: #f1c19b;
-    --orb-b-hi: #fce6d4;
-    --orb-b-alpha: 0.82;
-    --orb-ring: #24566b;
 
     /* Ink */
     --ink: #15262d;
@@ -102,75 +96,6 @@
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --shadow-float: 0 1px 2px rgb(21 38 45 / 0.08), 0 16px 40px -14px rgb(21 38 45 / 0.28);
-}
-
-/* Dark theme: follows the device unless the visitor picks one with the sun/moon button */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-        color-scheme: dark;
-        --primary-color: #8cc3d6;
-        --primary-strong: #a9d4e2;
-        --primary-soft: #2e4c57;
-        --on-primary: #0d1b21;
-
-        --bg: #1f2c32;
-        --surface: #26363d;
-        --tint: #263a41;
-        --warm: rgb(247 196 158 / 0.16);
-        --warm-ink: #f7c49e;
-    --brand-fill: #2c5361;
-    --on-brand-fill: #eef4f5;
-    --orb-a: #34606c;
-    --orb-a-hi: #4f7f8c;
-    --orb-b: #8c5d43;
-    --orb-b-hi: #b5805f;
-    --orb-b-alpha: 0.78;
-    --orb-ring: #8cc3d6;
-
-        --ink: #e2eaec;
-        --ink-2: #bfcccf;
-        --ink-3: #9aaeb3;
-        --line: #364b53;
-        --line-strong: #4b646d;
-
-        --success: #6fcf9f;
-        --error: #ff8a7a;
-
-        --shadow-float: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -14px rgb(0 0 0 / 0.6);
-    }
-}
-
-:root[data-theme="dark"] {
-    color-scheme: dark;
-    --primary-color: #8cc3d6;
-    --primary-strong: #a9d4e2;
-    --primary-soft: #2e4c57;
-    --on-primary: #0d1b21;
-
-    --bg: #1f2c32;
-    --surface: #26363d;
-    --tint: #263a41;
-    --warm: rgb(247 196 158 / 0.16);
-    --warm-ink: #f7c49e;
-    --brand-fill: #2c5361;
-    --on-brand-fill: #eef4f5;
-    --orb-a: #34606c;
-    --orb-a-hi: #4f7f8c;
-    --orb-b: #8c5d43;
-    --orb-b-hi: #b5805f;
-    --orb-b-alpha: 0.78;
-    --orb-ring: #8cc3d6;
-
-    --ink: #e2eaec;
-    --ink-2: #bfcccf;
-    --ink-3: #9aaeb3;
-    --line: #364b53;
-    --line-strong: #4b646d;
-
-    --success: #6fcf9f;
-    --error: #ff8a7a;
-
-    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -14px rgb(0 0 0 / 0.6);
 }
 
 /* ==========================================================================
@@ -524,35 +449,6 @@ main:focus {
     color: var(--ink-3);
 }
 
-.theme-toggle {
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    font-size: 1.2rem;
-    color: var(--ink-2);
-    background: transparent;
-    border: 1.5px solid var(--line-strong);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out), transform 0.3s var(--ease-out);
-}
-
-.theme-toggle:hover {
-    color: var(--ink);
-    border-color: var(--ink-3);
-}
-
-.theme-toggle:active i {
-    transform: rotate(-30deg);
-}
-
-.theme-toggle i {
-    transition: transform 0.3s var(--ease-out);
-}
-
 .main-nav ul {
     display: flex;
     align-items: center;
@@ -815,8 +711,9 @@ main:focus {
     margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
 }
 
-/* Ambient background on every page: two overlapping circles (two people meeting).
-   It lives outside <main>, so it stays put and glides when the page changes. */
+/* Home backdrop: the studio itself, two armchairs facing each other.
+   It lives outside <main>, so it stays put and fades when the page changes;
+   inner pages keep the plain ground so reading stays easy. */
 .ambient {
     position: fixed;
     top: var(--header-h);
@@ -832,87 +729,30 @@ main:focus {
     z-index: 1;
 }
 
-.ambient-inner {
+.ambient-photo {
     position: absolute;
-    top: 50%;
-    right: max(var(--gutter), calc((100vw - 1240px) / 2 + var(--gutter)));
-    width: min(42vw, 520px, 66vh);
-    aspect-ratio: 1;
-    opacity: 1;
-    transform: translateY(-50%);
-    transition: opacity 0.9s var(--ease-out), transform 1.2s var(--ease-out);
-}
-
-/* Inner pages: softer and tucked into the corner so reading stays easy */
-body:has(main:not([data-page="home"])) .ambient-inner {
-    opacity: 0.32;
-    transform: translate(28%, 6%) scale(1.25);
-}
-
-.orb {
-    position: absolute;
-    aspect-ratio: 1;
-}
-
-.orb-a {
-    top: 6%;
-    left: 0;
-    width: 66%;
-    background: radial-gradient(circle at 32% 28%, var(--orb-a-hi), var(--orb-a) 70%);
-    border-radius: 58% 42% 55% 45% / 47% 56% 44% 53%;
-}
-
-.orb-b {
+    top: 0;
+    bottom: 0;
+    left: 36%;
     right: 0;
-    bottom: 6%;
-    width: 58%;
-    background: radial-gradient(circle at 35% 30%, var(--orb-b-hi), var(--orb-b) 72%);
-    border-radius: 45% 55% 42% 58% / 55% 45% 57% 43%;
-    opacity: var(--orb-b-alpha);
+    background: url("images/studio-sfondo-1000.jpg") 50% 35% / cover no-repeat;
+    background-image: image-set(url("images/studio-sfondo-1000.jpg") 1x, url("images/studio-sfondo-1800.jpg") 2x);
+    opacity: 0;
+    transition: opacity 0.9s var(--ease-out);
 }
 
-.orb-ring {
+/* Veil: the room fades into the ground where the text sits */
+.ambient-photo::after {
+    content: "";
     position: absolute;
-    top: 22%;
-    left: 20%;
-    width: 60%;
-    aspect-ratio: 1;
-    border: 1px solid var(--orb-ring);
-    border-radius: 50%;
-    opacity: 0.4;
+    inset: 0;
+    background:
+        linear-gradient(90deg, var(--bg) 0%, rgb(244 247 248 / 0.85) 22%, rgb(244 247 248 / 0.2) 48%, rgb(244 247 248 / 0) 70%),
+        linear-gradient(0deg, rgb(244 247 248 / 0.9) 0%, rgb(244 247 248 / 0) 28%);
 }
 
-@keyframes orb-flow-a {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-        border-radius: 58% 42% 55% 45% / 47% 56% 44% 53%;
-    }
-    50% {
-        transform: translate(4%, -3%) rotate(8deg);
-        border-radius: 46% 54% 44% 56% / 56% 44% 55% 45%;
-    }
-}
-
-@keyframes orb-flow-b {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-        border-radius: 45% 55% 42% 58% / 55% 45% 57% 43%;
-    }
-    50% {
-        transform: translate(-4%, 3%) rotate(-10deg);
-        border-radius: 56% 44% 58% 42% / 44% 57% 43% 56%;
-    }
-}
-
-@keyframes orb-ring-drift {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-2%, 2%) scale(1.03); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .orb-a { animation: orb-flow-a 24s ease-in-out infinite; }
-    .orb-b { animation: orb-flow-b 28s ease-in-out infinite; }
-    .orb-ring { animation: orb-ring-drift 18s ease-in-out infinite; }
+body:has(main[data-page="home"]) .ambient-photo {
+    opacity: 1;
 }
 
 .fact-row {
@@ -2000,7 +1840,7 @@ html:not(.js) .booking-main {
         grid-template-columns: 1fr;
     }
 
-    /* Phones: no fact row; the circles sit above the title */
+    /* Phones: no fact row; the studio sits above the title */
     .fact-row {
         display: none;
     }
@@ -2008,19 +1848,19 @@ html:not(.js) .booking-main {
     .home-grid {
         max-width: none;
         align-items: end;
-        padding-bottom: 8vh;
+        padding-bottom: 4vh;
     }
 
-    .ambient-inner {
-        top: 2%;
-        right: -14vw;
-        width: min(78vw, 46vh);
-        transform: none;
+    .ambient-photo {
+        left: 0;
+        bottom: auto;
+        height: 44%;
+        background-image: url("images/studio-sfondo-1000.jpg");
+        background-position: 50% 30%;
     }
 
-    body:has(main:not([data-page="home"])) .ambient-inner {
-        opacity: 0.22;
-        transform: translate(10%, 75%) scale(1.15);
+    .ambient-photo::after {
+        background: linear-gradient(180deg, rgb(244 247 248 / 0) 50%, rgb(244 247 248 / 0.75) 80%, var(--bg) 100%);
     }
 
     .portrait {
