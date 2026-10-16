@@ -701,7 +701,7 @@ main:focus {
 }
 
 .hero-name {
-    margin-top: 1rem;
+    margin-top: clamp(1rem, 2.5vh, 1.5rem);
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--primary-color);
@@ -713,6 +713,20 @@ main:focus {
     align-items: center;
     gap: 1rem 1.75rem;
     margin-top: clamp(1.75rem, 4vh, 2.5rem);
+}
+
+.hero-note {
+    max-width: 44ch;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--ink-3);
+}
+
+.hero-alt {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    max-width: 44ch;
 }
 
 .btn-lg {
