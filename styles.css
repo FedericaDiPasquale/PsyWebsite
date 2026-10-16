@@ -1562,6 +1562,46 @@ html:not(.js) .booking-main {
     to { opacity: 0; transform: translateY(-6px); }
 }
 
+/* Gentle motion: the home opens in sequence, sections rise in once as they
+   scroll into view. Only when the visitor has not asked for reduced motion;
+   sections are hidden only after script.js has armed the observer. */
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(14px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .hero-text > *,
+    .hero-photo {
+        animation: rise-in 0.9s var(--ease-out) both;
+    }
+
+    .hero-text > :nth-child(2) { animation-delay: 0.12s; }
+    .hero-text > :nth-child(3) { animation-delay: 0.24s; }
+    .hero-photo { animation-delay: 0.3s; }
+
+    .reveal-ready .reveal {
+        transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+        transition-delay: var(--reveal-delay, 0s);
+    }
+
+    .reveal-ready .reveal:not(.is-visible) {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    .hero-photo {
+        overflow: hidden;
+    }
+
+    .hero-photo img {
+        transition: transform 1.2s var(--ease-out);
+    }
+
+    .hero-photo:hover img {
+        transform: scale(1.025);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

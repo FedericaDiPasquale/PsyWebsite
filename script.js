@@ -283,6 +283,38 @@ function initPage(hash) {
 }
 
 // ========================================
+// Sections rise in once as they scroll into view (skipped with reduced motion)
+// ========================================
+function initReveal() {
+    if (prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+    const groups = document.querySelectorAll('.home-section, .pillars, .steps');
+    if (!groups.length) return;
+    const items = [];
+    groups.forEach(group => {
+        if (group.matches('.pillars, .steps')) {
+            Array.from(group.children).forEach((li, i) => {
+                li.style.setProperty('--reveal-delay', (i * 0.12) + 's');
+                items.push(li);
+            });
+        } else {
+            items.push(group.querySelector('.block-title'));
+        }
+    });
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+        });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+    items.filter(Boolean).forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+    document.documentElement.classList.add('reveal-ready');
+}
+
+// ========================================
 // Mobile menu: the header button opens and closes the page list
 // ========================================
 function initNavToggle() {
@@ -417,6 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initPage(location.hash);
     showCookieConsent();
     initNavToggle();
+    initReveal();
 
     document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
