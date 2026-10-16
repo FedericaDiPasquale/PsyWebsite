@@ -52,31 +52,31 @@
 :root {
     color-scheme: light;
 
-    /* Brand: deep petrol taken from the studio armchairs */
-    --primary-color: #24566b;
-    --primary-strong: #1a4254;
-    --primary-soft: #d6e6ea;
-    --on-primary: #ffffff;
+    /* Brand: deep petrol taken from the studio armchairs, on a warm cream ground (no pure white anywhere) */
+    --primary-color: #2c5d68;
+    --primary-strong: #214952;
+    --primary-soft: #dbe4df;
+    --on-primary: #fbf6ee;
 
     /* Grounds */
-    --bg: #f4f7f8;
-    --surface: #ffffff;
-    --tint: #e5eef0;
-    --warm: #f7dcc6;
-    --warm-ink: #5a3420;
-    --brand-fill: #24566b;
-    --on-brand-fill: #ffffff;
+    --bg: #f5eee2;
+    --surface: #fbf6ee;
+    --tint: #eee4d4;
+    --warm: #efd3bb;
+    --warm-ink: #6e3b22;
+    --brand-fill: #2c5d68;
+    --on-brand-fill: #fbf6ee;
 
     /* Ink */
-    --ink: #15262d;
-    --ink-2: #3d4f56;
-    --ink-3: #5a6b72;
-    --line: #d5dfe1;
-    --line-strong: #b7c6c9;
+    --ink: #2b2622;
+    --ink-2: #51483f;
+    --ink-3: #6e6357;
+    --line: #e3d8c7;
+    --line-strong: #c9bba6;
 
     /* Status */
-    --success: #1f7a52;
-    --error: #b42318;
+    --success: #2f7a4f;
+    --error: #a8321f;
 
     /* Type */
     --font: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -95,7 +95,7 @@
     --footer-h: 52px;
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --shadow-float: 0 1px 2px rgb(21 38 45 / 0.08), 0 16px 40px -14px rgb(21 38 45 / 0.28);
+    --shadow-float: 0 1px 2px rgb(43 38 34 / 0.08), 0 16px 40px -14px rgb(43 38 34 / 0.26);
 }
 
 /* ==========================================================================
@@ -747,8 +747,9 @@ main:focus {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(90deg, var(--bg) 0%, rgb(244 247 248 / 0.85) 22%, rgb(244 247 248 / 0.2) 48%, rgb(244 247 248 / 0) 70%),
-        linear-gradient(0deg, rgb(244 247 248 / 0.9) 0%, rgb(244 247 248 / 0) 28%);
+        linear-gradient(90deg, var(--bg) 0%, rgb(245 238 226 / 0.85) 22%, rgb(245 238 226 / 0.2) 48%, rgb(245 238 226 / 0) 70%),
+        linear-gradient(0deg, rgb(245 238 226 / 0.9) 0%, rgb(245 238 226 / 0) 28%),
+        rgb(236 214 182 / 0.16);
 }
 
 body:has(main[data-page="home"]) .ambient-photo {
@@ -1454,7 +1455,7 @@ html:not(.js) .booking-main {
     padding: 0.9rem 1.15rem;
     font-weight: 500;
     line-height: 1.45;
-    color: #ffffff;
+    color: var(--on-primary);
     border-radius: var(--r-input);
     box-shadow: var(--shadow-float);
     opacity: 0;
@@ -1469,7 +1470,7 @@ html:not(.js) .booking-main {
 
 .notification-success { background: #1f7a52; }
 .notification-error { background: #b42318; }
-.notification-info { background: #24566b; }
+.notification-info { background: var(--primary-color); }
 
 /* ==========================================================================
    Motion: only the content area changes (the signature interaction)
@@ -1860,7 +1861,9 @@ html:not(.js) .booking-main {
     }
 
     .ambient-photo::after {
-        background: linear-gradient(180deg, rgb(244 247 248 / 0) 50%, rgb(244 247 248 / 0.75) 80%, var(--bg) 100%);
+        background:
+            linear-gradient(180deg, rgb(245 238 226 / 0) 50%, rgb(245 238 226 / 0.75) 80%, var(--bg) 100%),
+            rgb(236 214 182 / 0.16);
     }
 
     .portrait {
