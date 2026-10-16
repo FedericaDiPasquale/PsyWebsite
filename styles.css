@@ -1354,17 +1354,42 @@ html:not(.js) .booking-main {
 /* ==========================================================================
    Cookie banner and settings
    ========================================================================== */
+/* Slim bar above the footer: says what it must and stays out of the way */
 .cookie-consent {
     position: fixed;
-    left: 1rem;
-    bottom: calc(var(--footer-h) + 1rem);
+    left: 50%;
+    bottom: calc(var(--footer-h) + 0.75rem);
     z-index: 150;
-    width: min(440px, calc(100% - 2rem));
-    padding: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    width: min(1160px, calc(100% - 2rem));
+    padding: 0.6rem 0.75rem 0.6rem 1.4rem;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 22px;
     box-shadow: var(--shadow-float);
+    transform: translateX(-50%);
+}
+
+.cookie-consent .cookie-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.cookie-consent .cookie-buttons {
+    flex: none;
+    margin-top: 0;
+}
+
+/* Phones move "Impostazioni" into the sentence so the buttons fit on one row */
+.cookie-settings-inline {
+    display: none;
+}
+
+.cookie-settings-inline .btn-text {
+    padding: 0;
+    font-size: inherit;
 }
 
 .cookie-consent[hidden],
@@ -1669,11 +1694,12 @@ html:not(.js) .booking-main {
 
 .pp-controls .pp-nav {
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: 0;
 }
 
 .pp-progress {
     display: flex;
+    margin-bottom: clamp(1.25rem, 3vh, 2rem);
     align-items: center;
     gap: 1rem;
     font-size: 0.875rem;
@@ -1730,7 +1756,8 @@ html:not(.js) .booking-main {
 /* Without JavaScript the questions stay readable but cannot be sent */
 .pp:not(.pp-ready) .pp-intro .pp-nav,
 .pp:not(.pp-ready) .pp-summary,
-.pp:not(.pp-ready) .pp-controls {
+.pp:not(.pp-ready) .pp-controls,
+.pp:not(.pp-ready) .pp-progress {
     display: none;
 }
 
@@ -1991,10 +2018,25 @@ html:not(.js) .booking-main {
     }
 
     .cookie-consent {
-        left: 0.5rem;
-        right: 0.5rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
         bottom: calc(var(--footer-h) + 0.5rem);
-        width: auto;
+        width: calc(100% - 1rem);
+        padding: 0.85rem 1rem;
+    }
+
+    .cookie-consent .cookie-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cookie-consent .cookie-buttons > .btn-text {
+        display: none;
+    }
+
+    .cookie-settings-inline {
+        display: inline;
     }
 }
 

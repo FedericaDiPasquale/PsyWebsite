@@ -99,7 +99,7 @@ function initContactForm() {
                 if (typeof trackFormSubmission === 'function') trackFormSubmission('contact_form');
             })
             .catch(() => {
-                showNotification('Errore nell\'invio del messaggio. Riprova più tardi oppure scrivimi su Whatsapp.', 'error');
+                showNotification('Errore nell\'invio del messaggio. Riprova più tardi oppure scrivimi su WhatsApp.', 'error');
             })
             .finally(() => {
                 submitBtn.textContent = originalText;
@@ -149,7 +149,7 @@ function initCalendly() {
                     Calendly.initInlineWidget({ url: widget.dataset.calendlyUrl, parentElement: widget });
                 }
             })
-            .catch(() => showNotification('Il calendario non si è caricato. Riprova o scrivimi su Whatsapp.', 'error'));
+            .catch(() => showNotification('Il calendario non si è caricato. Riprova o scrivimi su WhatsApp.', 'error'));
         return;
     }
 
@@ -164,7 +164,7 @@ function initCalendly() {
                 Abilita Calendly
             </button>
             <button type="button" onclick="showCookieSettings()" class="btn btn-secondary btn-sm">
-                Impostazioni Cookie
+                Impostazioni cookie
             </button>
         `;
         bookingMain.appendChild(box);
@@ -448,6 +448,7 @@ function initPrimoPasso() {
         summary.hidden = index !== steps.length;
         steps.forEach((step, i) => { step.hidden = i !== index; });
         controls.hidden = index < 0 || index >= steps.length;
+        q('progress').hidden = controls.hidden;
         form.closest('.page').classList.toggle('pp-started', index >= 0);
 
         if (index >= 0 && index < steps.length) {
