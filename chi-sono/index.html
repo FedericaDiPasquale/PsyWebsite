@@ -38,8 +38,8 @@
 
     <!-- Fonts, styles, icons -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/spectral-300.woff2" crossorigin>
-    <link rel="stylesheet" href="/styles.css?v=20261016c">
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/spectral-400.woff2" crossorigin>
+    <link rel="stylesheet" href="/styles.css?v=20261016d">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
     <!-- Google Analytics 4 -->
@@ -117,7 +117,9 @@
                 <span class="brand-name">Dott.ssa Di Pasquale Lorena</span>
                 <span class="brand-role">Psicologa e psicoterapeuta</span>
             </a>
-            <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/prenota/" class="btn btn-primary btn-sm header-book">Prenota</a>
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+            <nav class="main-nav" id="main-nav" aria-label="Navigazione principale">
                 <ul>
                     <li><a href="/chi-sono/" class="nav-pill" aria-current="page">Chi sono</a></li>
                     <li><a href="/trattamenti/" class="nav-pill">Trattamenti</a></li>
@@ -128,9 +130,6 @@
         </div>
     </header>
 
-    <div class="ambient" aria-hidden="true">
-        <div class="ambient-photo"></div>
-    </div>
 
     <main id="main" tabindex="-1" data-page="chi-sono">
         <div class="page container">
@@ -220,15 +219,6 @@
                 <li><button type="button" class="footer-link-btn" onclick="showCookieSettings()">Impostazioni cookie</button></li>
             </ul>
         </div>
-        <nav class="tabbar" aria-label="Menu">
-            <ul>
-                <li><a href="/"><i class="ph ph-house" aria-hidden="true"></i><span>Home</span></a></li>
-                <li><a href="/chi-sono/" aria-current="page"><i class="ph ph-user" aria-hidden="true"></i><span>Chi sono</span></a></li>
-                <li><a href="/trattamenti/"><i class="ph ph-hand-heart" aria-hidden="true"></i><span>Trattamenti</span></a></li>
-                <li><a href="/prenota/"><i class="ph ph-calendar-check" aria-hidden="true"></i><span>Prenota</span></a></li>
-                <li><a href="/contatti/"><i class="ph ph-chat-circle" aria-hidden="true"></i><span>Contatti</span></a></li>
-            </ul>
-        </nav>
     </footer>
 
     <!-- Cookie Consent Banner -->
@@ -276,6 +266,6 @@
         </div>
     </div>
 
-    <script src="/script.js?v=20261016c"></script>
+    <script src="/script.js?v=20261016d"></script>
 </body>
 </html>

@@ -252,20 +252,8 @@ function loadCookiePreferences() {
 }
 
 // ========================================
-// In-place navigation: header and footer stay, only <main> changes.
-// Every URL is still a complete page, so links work without JS and for search engines.
+// Page helpers
 // ========================================
-const SHELL_PAGES = ['/', '/chi-sono/', '/trattamenti/', '/prenota/', '/contatti/', '/primo-passo/'];
-const pageCache = new Map();
-let renderedPath = location.pathname;
-
-function updateNavState(pathname) {
-    document.querySelectorAll('.main-nav a, .tabbar a, .brand').forEach(a => {
-        if (new URL(a.href).pathname === pathname) a.setAttribute('aria-current', 'page');
-        else a.removeAttribute('aria-current');
-    });
-}
-
 function initMapGate() {
     const btn = document.querySelector('main [data-load-map]');
     if (!btn) return;
@@ -278,7 +266,7 @@ function initMapGate() {
     });
 }
 
-// Bring a section into view inside the scrolling content area
+// Bring a section into view, e.g. after a link to /contatti/#messaggio
 function scrollToHash(hash, smooth = false) {
     const el = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
     if (!el || !el.closest('main')) return;
@@ -294,91 +282,23 @@ function initPage(hash) {
     document.querySelectorAll('.current-year').forEach(el => { el.textContent = new Date().getFullYear(); });
 }
 
-async function fetchPage(pathname) {
-    if (pageCache.has(pathname)) return pageCache.get(pathname);
-    const res = await fetch(pathname, { headers: { 'Accept': 'text/html' } });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const html = await res.text();
-    pageCache.set(pathname, html);
-    return html;
-}
-
-async function navigate(url, { push = true } = {}) {
-    const target = new URL(url, location.href);
-
-    // Same page already on screen: only scroll the content area
-    if (target.pathname === renderedPath) {
-        if (push && target.hash) history.pushState({ shell: true }, '', target.pathname + target.hash);
-        if (target.hash) scrollToHash(target.hash, true);
-        else document.querySelector('main').scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-        return;
-    }
-
-    let doc;
-    try {
-        doc = new DOMParser().parseFromString(await fetchPage(target.pathname), 'text/html');
-    } catch (err) {
-        location.href = target.href;
-        return;
-    }
-    const newMain = doc.querySelector('main');
-    if (!newMain) {
-        location.href = target.href;
-        return;
-    }
-
-    const swap = () => {
-        document.querySelector('main').replaceWith(document.importNode(newMain, true));
-        document.title = doc.title;
-        [['meta[name="description"]', 'content'], ['link[rel="canonical"]', 'href'],
-            ['meta[property="og:url"]', 'content'], ['meta[property="og:title"]', 'content'],
-            ['meta[property="og:description"]', 'content']].forEach(([sel, attr]) => {
-            const current = document.querySelector(sel);
-            const next = doc.querySelector(sel);
-            if (current && next) current.setAttribute(attr, next.getAttribute(attr));
-        });
-        if (push) history.pushState({ shell: true }, '', target.pathname + target.hash);
-        renderedPath = target.pathname;
-        updateNavState(target.pathname);
-        initPage(target.hash);
+// ========================================
+// Mobile menu: the header button opens and closes the page list
+// ========================================
+function initNavToggle() {
+    const btn = document.querySelector('.nav-toggle');
+    const header = document.querySelector('.site-header');
+    if (!btn || !header) return;
+    const close = () => {
+        header.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
     };
-
-    if (document.startViewTransition && !prefersReducedMotion()) {
-        // An interrupted transition still swaps the content; just silence its promises
-        const transition = document.startViewTransition(swap);
-        transition.ready.catch(() => {});
-        transition.finished.catch(() => {});
-        await transition.updateCallbackDone.catch(() => {});
-    } else {
-        swap();
-        if (!prefersReducedMotion()) document.querySelector('main').classList.add('content-enter');
-    }
-
-    const main = document.querySelector('main');
-    main.focus({ preventScroll: true });
-
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'page_view', { page_title: document.title, page_location: location.href, page_path: location.pathname });
-    }
-}
-
-function initShellNavigation() {
-    document.addEventListener('click', e => {
-        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        const link = e.target.closest('a[href]');
-        if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
-        const url = new URL(link.href, location.href);
-        if (url.origin !== location.origin || !SHELL_PAGES.includes(url.pathname)) return;
-        e.preventDefault();
-        navigate(url.href);
+    btn.addEventListener('click', () => {
+        const open = header.classList.toggle('nav-open');
+        btn.setAttribute('aria-expanded', String(open));
     });
-
-    window.addEventListener('popstate', () => navigate(location.href, { push: false }));
-
-    // Warm the cache so switching pages is instant
-    const prefetch = () => SHELL_PAGES.filter(p => p !== location.pathname).forEach(p => fetchPage(p).catch(() => {}));
-    if ('requestIdleCallback' in window) requestIdleCallback(prefetch);
-    else setTimeout(prefetch, 1500);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    document.addEventListener('click', e => { if (!header.contains(e.target)) close(); });
 }
 
 // ========================================
@@ -462,8 +382,8 @@ function initPrimoPasso() {
             renderSummary();
             form.querySelector('.pp-summary-title').focus({ preventScroll: true });
         }
-        const main = document.querySelector('main');
-        if (main) main.scrollTo({ top: 0 });
+        const page = form.closest('.page');
+        if (page && index !== -1) page.scrollIntoView({ block: 'start' });
     }
 
     q('start').addEventListener('click', () => show(0));
@@ -496,7 +416,7 @@ function initPrimoPasso() {
 document.addEventListener('DOMContentLoaded', function () {
     initPage(location.hash);
     showCookieConsent();
-    initShellNavigation();
+    initNavToggle();
 
     document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;

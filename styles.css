@@ -12,7 +12,7 @@
 @font-face {
     font-family: 'Spectral';
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-display: swap;
     src: url("fonts/spectral-300.woff2") format("woff2");
 }
@@ -28,7 +28,7 @@
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-display: swap;
     src: url("fonts/poppins-300.woff2") format("woff2");
 }
@@ -81,7 +81,7 @@
     /* Type */
     --font: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --font-display: 'Spectral', Georgia, 'Times New Roman', serif;
-    --step-0: 1rem;
+    --step-0: 1.0625rem;
     --step-1: clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem);
     --step-2: clamp(1.3125rem, 1.15rem + 0.7vw, 1.75rem);
 
@@ -92,7 +92,7 @@
     --r-input: 14px;
     --r-pill: 999px;
     --header-h: 72px;
-    --footer-h: 52px;
+    --footer-h: 64px;
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --shadow-float: 0 1px 2px rgb(43 38 34 / 0.08), 0 16px 40px -14px rgb(43 38 34 / 0.26);
@@ -143,7 +143,7 @@ img {
 
 h1, h2, h3 {
     color: var(--ink);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.015em;
     text-wrap: balance;
@@ -237,31 +237,30 @@ main:focus {
 }
 
 /* ==========================================================================
-   The shell: fixed header, scrolling content area, fixed footer
+   Page layout: a normal scrolling page under a sticky header
    ========================================================================== */
-.js body {
-    display: grid;
-    grid-template-rows: var(--header-h) minmax(0, 1fr) auto;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
+html {
+    scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
-.js main {
-    position: relative;
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scroll-behavior: smooth;
-    scroll-padding-top: 1.5rem;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+main {
+    flex: 1;
+}
+
+main:focus {
+    outline: none;
 }
 
 .page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    padding-top: clamp(1.5rem, 6vh, 4rem);
-    padding-bottom: clamp(2rem, 6vh, 4rem);
+    padding-top: clamp(2rem, 6vh, 4.5rem);
+    padding-bottom: clamp(3rem, 8vh, 6rem);
 }
 
 /* ==========================================================================
@@ -411,9 +410,18 @@ main:focus {
    Header
    ========================================================================== */
 .site-header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 50;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
     border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.header-book,
+.nav-toggle {
+    display: none;
 }
 
 .header-inner {
@@ -496,11 +504,9 @@ main:focus {
 }
 
 /* ==========================================================================
-   Footer: slim legal bar on desktop, menu bar on mobile
+   Footer
    ========================================================================== */
 .site-footer {
-    position: relative;
-    z-index: 50;
     border-top: 1px solid var(--line);
 }
 
@@ -548,10 +554,6 @@ main:focus {
     color: var(--primary-color);
 }
 
-.tabbar {
-    display: none;
-}
-
 /* ==========================================================================
    Page head and sections
    ========================================================================== */
@@ -563,7 +565,7 @@ main:focus {
 .page-head h1 {
     font-family: var(--font-display);
     font-size: clamp(2.125rem, min(4vw, 6.5vh), 3.5rem);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.1;
     letter-spacing: -0.01em;
     color: var(--primary-color);
@@ -589,7 +591,7 @@ main:focus {
 .block-title {
     font-family: var(--font-display);
     font-size: clamp(1.625rem, 1.25rem + 1.2vw, 2.25rem);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.005em;
     color: var(--primary-color);
@@ -659,123 +661,153 @@ main:focus {
 
 .lead-text {
     font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.6;
     color: var(--ink);
 }
 
 /* ==========================================================================
-   Home
+   Home: hero with the studio, how I work, how to start, closing call
    ========================================================================== */
-.page-home {
-    justify-content: space-between;
-}
-
-.home-grid {
-    flex: 1;
+.hero {
     display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     align-items: center;
-    max-width: 56%;
+    gap: clamp(2rem, 5vw, 5rem);
 }
 
-.home-hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.hero-solo {
+    grid-template-columns: minmax(0, 44rem);
+    min-height: 50vh;
 }
 
-.home-hero h1 {
+.hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, min(4.8vw, 8vh), 4.5rem);
-    font-weight: 300;
+    font-size: clamp(2.5rem, 1.6rem + 3.2vw, 4.25rem);
+    font-weight: 400;
     line-height: 1.06;
-    letter-spacing: -0.01em;
-    text-wrap: wrap;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    text-wrap: balance;
 }
 
-.home-name {
-    margin-top: clamp(1rem, 3vh, 2rem);
+.hero-voice {
+    max-width: 30ch;
+    margin-top: clamp(1rem, 2.5vh, 1.5rem);
     font-size: var(--step-2);
-    font-weight: 400;
-    line-height: 1.3;
+    line-height: 1.4;
+    color: var(--ink-2);
+    text-wrap: pretty;
+}
+
+.hero-name {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
     color: var(--primary-color);
 }
 
-.home-tagline {
-    margin-top: 0.25rem;
-    font-size: var(--step-1);
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+    margin-top: clamp(1.75rem, 4vh, 2.5rem);
 }
 
-.home-offer {
-    align-self: flex-start;
-    margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
+.btn-lg {
+    min-height: 52px;
+    padding: 0.8rem 1.75rem;
+    font-size: 1rem;
 }
 
-/* Home backdrop: the studio itself, two armchairs facing each other.
-   It lives outside <main>, so it stays put and fades when the page changes;
-   inner pages keep the plain ground so reading stays easy. */
-.ambient {
-    position: fixed;
-    top: var(--header-h);
-    bottom: var(--footer-h);
-    left: 0;
-    right: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
+.hero-photo img {
+    width: 100%;
+    aspect-ratio: 1000 / 950;
+    object-fit: cover;
+    border-radius: var(--r-media);
 }
 
-.js main {
-    z-index: 1;
+.hero-photo figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.8438rem;
+    color: var(--ink-3);
 }
 
-.ambient-photo {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 36%;
-    right: 0;
-    background: url("images/studio-sfondo-1000.jpg") 50% 35% / cover no-repeat;
-    background-image: image-set(url("images/studio-sfondo-1000.jpg") 1x, url("images/studio-sfondo-1800.jpg") 2x);
-    opacity: 0;
-    transition: opacity 0.9s var(--ease-out);
-}
-
-/* Veil: the room fades into the ground where the text sits */
-.ambient-photo::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(90deg, var(--bg) 0%, rgb(245 238 226 / 0.85) 22%, rgb(245 238 226 / 0.2) 48%, rgb(245 238 226 / 0) 70%),
-        linear-gradient(0deg, rgb(245 238 226 / 0.9) 0%, rgb(245 238 226 / 0) 28%),
-        rgb(236 214 182 / 0.16);
-}
-
-body:has(main[data-page="home"]) .ambient-photo {
-    opacity: 1;
-}
-
-.fact-row {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem 1.5rem;
-    margin-top: 2rem;
-    padding-top: clamp(1rem, 2.5vh, 1.5rem);
+.home-section {
+    margin-top: clamp(4rem, 10vh, 7rem);
+    padding-top: clamp(2.5rem, 6vh, 3.5rem);
     border-top: 1px solid var(--line);
 }
 
-.fact-row li {
-    font-size: 0.875rem;
-    line-height: 1.4;
-    font-variant-numeric: tabular-nums;
+.pillars,
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem clamp(1.5rem, 4vw, 3.5rem);
+    margin-top: clamp(1.5rem, 4vh, 2.5rem);
+    padding: 0;
+    list-style: none;
 }
 
-.fact-row strong {
-    display: block;
-    font-size: 1rem;
+.pillars h3,
+.steps h3 {
+    font-size: var(--step-1);
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--ink);
+}
+
+.pillars p,
+.steps p {
+    margin-top: 0.5rem;
+    line-height: 1.65;
+}
+
+.pillars + .link-arrow {
+    margin-top: 2rem;
+}
+
+.steps {
+    counter-reset: step;
+}
+
+.steps li {
+    counter-increment: step;
+}
+
+.steps li::before {
+    content: counter(step);
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+}
+
+.home-cta {
+    margin-top: clamp(4rem, 10vh, 7rem);
+    padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
+    text-align: center;
+    background: var(--tint);
+    border-radius: var(--r-media);
+}
+
+.home-cta h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem);
     font-weight: 400;
-    line-height: 1.3;
+    line-height: 1.15;
+    color: var(--ink);
+}
+
+.home-cta .hero-actions {
+    justify-content: center;
 }
 
 /* ==========================================================================
@@ -1358,7 +1390,7 @@ html:not(.js) .booking-main {
 .cookie-consent {
     position: fixed;
     left: 50%;
-    bottom: calc(var(--footer-h) + 0.75rem);
+    bottom: 0.75rem;
     z-index: 150;
     display: flex;
     align-items: center;
@@ -1509,37 +1541,7 @@ html:not(.js) .booking-main {
     to { opacity: 0; transform: translateY(-6px); }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .site-header { view-transition-name: site-header; }
-    .site-footer { view-transition-name: site-footer; }
-    main { view-transition-name: content; }
-
-    ::view-transition-old(content) {
-        animation: content-out 0.16s ease-in both;
-    }
-
-    ::view-transition-new(content) {
-        animation: content-in 0.38s var(--ease-out) both;
-    }
-
-    ::view-transition-old(site-header),
-    ::view-transition-new(site-header),
-    ::view-transition-old(site-footer),
-    ::view-transition-new(site-footer) {
-        animation: none;
-    }
-
-    /* Fallback when View Transitions are not available */
-    .content-enter {
-        animation: content-in 0.38s var(--ease-out) both;
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .js main {
-        scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -1581,7 +1583,7 @@ html:not(.js) .booking-main {
     padding: 0;
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.125rem);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.2;
     color: var(--ink);
 }
@@ -1773,26 +1775,10 @@ html:not(.js) .booking-main {
     from { opacity: 0; transform: translateY(8px); }
 }
 
-.home-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1.25rem;
-    margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
-}
-
-.home-actions .home-offer {
-    margin-top: 0;
-}
-
 /* ==========================================================================
    Responsive
    ========================================================================== */
 @media (max-width: 1100px) {
-    .fact-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .footer-legal span:last-child {
         display: none;
     }
@@ -1800,97 +1786,147 @@ html:not(.js) .booking-main {
 
 @media (max-width: 860px) {
     :root {
-        --header-h: 56px;
-        --footer-h: calc(64px + env(safe-area-inset-bottom));
+        --header-h: 60px;
     }
 
-    .main-nav,
-    .brand-role,
-    .footer-bar {
+    .brand-role {
         display: none;
+    }
+
+    /* Phones: "Prenota" stays in sight, the other pages sit behind "Menu" */
+    .header-inner {
+        gap: 0.5rem;
+    }
+
+    .header-book {
+        display: inline-flex;
+    }
+
+    .brand {
+        min-width: 0;
+    }
+
+    .brand-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0.4rem 0.9rem;
+        font: inherit;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--ink);
+        background: transparent;
+        border: 1.5px solid var(--line-strong);
+        border-radius: var(--r-pill);
+        cursor: pointer;
+    }
+
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        padding: 0.5rem var(--gutter) 1rem;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+        box-shadow: var(--shadow-float);
+    }
+
+    .nav-open .main-nav {
+        display: block;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .main-nav li + li {
+        border-top: 1px solid var(--line);
+    }
+
+    .nav-pill {
+        padding: 0.9rem 0.25rem;
+        font-size: 1.0625rem;
+        border-radius: 0;
+    }
+
+    .nav-pill:hover {
+        background: none;
+    }
+
+    .nav-pill[aria-current="page"] {
+        background: none;
+    }
+
+    .nav-pill.nav-book {
+        margin: 0.75rem 0 0;
+        padding: 0.8rem 1.25rem;
+        text-align: center;
+        border-radius: var(--r-pill);
+    }
+
+    .main-nav li:has(.nav-book) {
+        border-top: 0;
+    }
+
+    .footer-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding-block: 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
+    }
+
+    .footer-legal {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .footer-legal span:last-child {
+        display: inline;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 0.5rem 1.25rem;
     }
 
     .page-head h1 {
         font-size: clamp(2rem, 9vw, 2.625rem);
     }
 
-    .tabbar {
-        display: block;
-        padding-bottom: env(safe-area-inset-bottom);
-        background: var(--bg);
+    .hero {
+        grid-template-columns: 1fr;
     }
 
-    .tabbar ul {
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        height: 64px;
+    .hero-photo img {
+        aspect-ratio: 4 / 3;
     }
 
-    .tabbar a {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.2rem;
-        height: 100%;
-        font-size: 0.75rem;
-        font-weight: 500;
-        line-height: 1.1;
-        color: var(--ink-3);
-        text-decoration: none;
+    .pillars,
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
     }
 
-    .tabbar i {
-        display: grid;
-        place-items: center;
-        width: 52px;
-        height: 30px;
-        font-size: 1.35rem;
-        border-radius: var(--r-pill);
-        transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
-    }
-
-    .tabbar a[aria-current="page"] {
-        color: var(--primary-color);
-    }
-
-    .tabbar a[aria-current="page"] i {
-        color: var(--primary-color);
-        background: var(--primary-soft);
+    .home-cta {
+        margin-inline: calc(-1 * var(--gutter));
+        border-radius: 0;
     }
 
     .split,
     .service,
     .about-layout,
     .contact-layout,
-    .cert-list li,
-    .home-grid {
+    .cert-list li {
         grid-template-columns: 1fr;
-    }
-
-    /* Phones: no fact row; the studio sits above the title */
-    .fact-row {
-        display: none;
-    }
-
-    .home-grid {
-        max-width: none;
-        align-items: end;
-        padding-bottom: 4vh;
-    }
-
-    .ambient-photo {
-        left: 0;
-        bottom: auto;
-        height: 44%;
-        background-image: url("images/studio-sfondo-1000.jpg");
-        background-position: 50% 30%;
-    }
-
-    .ambient-photo::after {
-        background:
-            linear-gradient(180deg, rgb(245 238 226 / 0) 50%, rgb(245 238 226 / 0.75) 80%, var(--bg) 100%),
-            rgb(236 214 182 / 0.16);
     }
 
     .portrait {
@@ -2021,7 +2057,7 @@ html:not(.js) .booking-main {
         flex-direction: column;
         align-items: stretch;
         gap: 0.6rem;
-        bottom: calc(var(--footer-h) + 0.5rem);
+        bottom: 0.5rem;
         width: calc(100% - 1rem);
         padding: 0.85rem 1rem;
     }
@@ -2040,19 +2076,9 @@ html:not(.js) .booking-main {
     }
 }
 
-/* Landscape phones and tiny windows: fall back to a normal scrolling page */
-@media (max-height: 480px) {
-    .js body {
-        display: block;
-        height: auto;
-        overflow: visible;
-    }
-
-    .js main {
-        overflow: visible;
-    }
-
-    .page {
-        min-height: 0;
+/* Narrow phones: the name needs the room; "Prenota" stays inside the menu */
+@media (max-width: 440px) {
+    .header-book {
+        display: none;
     }
 }

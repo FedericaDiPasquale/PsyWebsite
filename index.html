@@ -67,8 +67,8 @@
 
     <!-- Fonts, styles, icons -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/spectral-300.woff2" crossorigin>
-    <link rel="stylesheet" href="/styles.css?v=20261016c">
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/spectral-400.woff2" crossorigin>
+    <link rel="stylesheet" href="/styles.css?v=20261016d">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
     <!-- Google Analytics 4 -->
@@ -305,7 +305,9 @@
                 <span class="brand-name">Dott.ssa Di Pasquale Lorena</span>
                 <span class="brand-role">Psicologa e psicoterapeuta</span>
             </a>
-            <nav class="main-nav" aria-label="Navigazione principale">
+            <a href="/prenota/" class="btn btn-primary btn-sm header-book">Prenota</a>
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+            <nav class="main-nav" id="main-nav" aria-label="Navigazione principale">
                 <ul>
                     <li><a href="/chi-sono/" class="nav-pill">Chi sono</a></li>
                     <li><a href="/trattamenti/" class="nav-pill">Trattamenti</a></li>
@@ -316,29 +318,69 @@
         </div>
     </header>
 
-    <div class="ambient" aria-hidden="true">
-        <div class="ambient-photo"></div>
-    </div>
 
     <main id="main" tabindex="-1" data-page="home">
         <div class="page page-home container">
-            <div class="home-grid">
-                <section class="home-hero" aria-labelledby="home-title">
-                    <h1 id="home-title">Psicologa e psicoterapeuta<br> a Ragusa</h1>
-                    <p class="home-name">Dott.ssa Lorena Di Pasquale</p>
-                    <p class="home-tagline">Terapia online e presenziale a Ragusa</p>
-                    <div class="home-actions">
-                        <a href="/primo-passo/" class="btn btn-primary">Fai il primo passo <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
-                        <a href="/prenota/" class="offer offer-link home-offer">Prima consultazione gratuita <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+            <section class="hero" aria-labelledby="home-title">
+                <div class="hero-text">
+                    <h1 id="home-title">Psicologa e psicoterapeuta a Ragusa</h1>
+                    <p class="hero-voice">Se stai attraversando un momento difficile, possiamo parlarne insieme.</p>
+                    <p class="hero-name">Dott.ssa Lorena Di Pasquale <span aria-hidden="true">·</span> online e in studio</p>
+                    <div class="hero-actions">
+                        <a href="/prenota/" class="btn btn-primary btn-lg">Prenota la consultazione gratuita</a>
+                        <a href="/primo-passo/" class="link-arrow">Non sai da dove iniziare? Rispondi a qualche domanda <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
                     </div>
-                </section>
-            </div>
-            <ul class="fact-row" aria-label="Informazioni in breve">
-                <li><strong>Albo Regione Sicilia</strong> n. 10319-A</li>
-                <li><strong>Sedute individuali</strong> di 50 minuti</li>
-                <li><strong>Online</strong> o in studio a Ragusa</li>
-                <li><strong>Aderisco</strong> al Bonus Psicologo</li>
-            </ul>
+                </div>
+                <figure class="hero-photo">
+                    <img src="/images/studio-sfondo-1000.jpg" srcset="/images/studio-sfondo-1000.jpg 1000w, /images/studio-sfondo-1800.jpg 1800w" sizes="(max-width: 860px) 100vw, 560px" width="1000" height="950" alt="Lo studio: due poltrone una di fronte all'altra, davanti a una finestra con tende chiare" fetchpriority="high">
+                    <figcaption>Lo studio in Corso Italia 398/b, Ragusa</figcaption>
+                </figure>
+            </section>
+
+            <section class="home-section" aria-labelledby="come-lavoro-title">
+                <h2 id="come-lavoro-title" class="block-title">Come lavoro</h2>
+                <ul class="pillars">
+                    <li>
+                        <h3>Ascolto e collaborazione</h3>
+                        <p>Uno stile empatico e collaborativo, orientato a un'alleanza terapeutica solida e al potenziamento delle tue risorse personali.</p>
+                    </li>
+                    <li>
+                        <h3>Una formazione solida</h3>
+                        <p>Specializzazione in psicoterapia psicoanalitica, con tecniche certificate TFP, EMDR e Mindfulness.</p>
+                    </li>
+                    <li>
+                        <h3>Online o in studio</h3>
+                        <p>Sedute individuali di 50 minuti, nello studio di Ragusa oppure online.</p>
+                    </li>
+                </ul>
+                <a href="/chi-sono/" class="link-arrow">Chi sono <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+            </section>
+
+            <section class="home-section" aria-labelledby="come-si-inizia-title">
+                <h2 id="come-si-inizia-title" class="block-title">Come si inizia</h2>
+                <ol class="steps">
+                    <li>
+                        <h3>Il primo colloquio è gratuito</h3>
+                        <p>Ci conosciamo e capiamo insieme di cosa hai bisogno.</p>
+                    </li>
+                    <li>
+                        <h3>Scegliamo come proseguire</h3>
+                        <p>In studio o online, nei giorni più comodi: <span class="nowrap">lun-ven 9-19,</span> <span class="nowrap">sab 9-13.</span></p>
+                    </li>
+                    <li>
+                        <h3>Puoi usare il Bonus Psicologo</h3>
+                        <p>Aderisco al Bonus Psicologo (INPS). Per modalità e requisiti, <a href="/contatti/#messaggio">scrivimi</a>.</p>
+                    </li>
+                </ol>
+            </section>
+
+            <section class="home-cta" aria-labelledby="home-cta-title">
+                <h2 id="home-cta-title">Il primo passo può essere piccolo.</h2>
+                <div class="hero-actions">
+                    <a href="/prenota/" class="btn btn-primary btn-lg">Prenota la consultazione gratuita</a>
+                    <a href="https://wa.me/393403531992" class="link-arrow" target="_blank" rel="noopener" onclick="trackPhoneClick()">Oppure scrivimi su WhatsApp <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -355,15 +397,6 @@
                 <li><button type="button" class="footer-link-btn" onclick="showCookieSettings()">Impostazioni cookie</button></li>
             </ul>
         </div>
-        <nav class="tabbar" aria-label="Menu">
-            <ul>
-                <li><a href="/" aria-current="page"><i class="ph ph-house" aria-hidden="true"></i><span>Home</span></a></li>
-                <li><a href="/chi-sono/"><i class="ph ph-user" aria-hidden="true"></i><span>Chi sono</span></a></li>
-                <li><a href="/trattamenti/"><i class="ph ph-hand-heart" aria-hidden="true"></i><span>Trattamenti</span></a></li>
-                <li><a href="/prenota/"><i class="ph ph-calendar-check" aria-hidden="true"></i><span>Prenota</span></a></li>
-                <li><a href="/contatti/"><i class="ph ph-chat-circle" aria-hidden="true"></i><span>Contatti</span></a></li>
-            </ul>
-        </nav>
     </footer>
 
     <!-- Cookie Consent Banner -->
@@ -411,6 +444,6 @@
         </div>
     </div>
 
-    <script src="/script.js?v=20261016c"></script>
+    <script src="/script.js?v=20261016d"></script>
 </body>
 </html>
